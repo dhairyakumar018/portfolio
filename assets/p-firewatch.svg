@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-label="Stylized circuit board illustration representing the Arduino fire detection system">
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,74,17,0.08)" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1280" height="720" fill="#0d0b14"/>
+  <rect width="1280" height="720" fill="url(#grid)"/>
+  <g stroke="rgba(255,74,17,0.35)" stroke-width="2" fill="none">
+    <path d="M 140 360 H 420 V 220 H 640"/>
+    <path d="M 140 420 H 380 V 500 H 640"/>
+    <path d="M 1140 300 H 900 V 360 H 720"/>
+    <path d="M 1140 480 H 860 V 420 H 720"/>
+  </g>
+  <g fill="rgba(255,74,17,0.55)">
+    <circle cx="140" cy="360" r="6"/>
+    <circle cx="140" cy="420" r="6"/>
+    <circle cx="1140" cy="300" r="6"/>
+    <circle cx="1140" cy="480" r="6"/>
+  </g>
+  <rect x="490" y="270" width="300" height="180" rx="14" fill="#151221" stroke="rgba(255,74,17,0.6)" stroke-width="2"/>
+  <rect x="520" y="300" width="90" height="26" rx="4" fill="rgba(108,92,255,0.35)"/>
+  <rect x="520" y="340" width="240" height="8" rx="4" fill="rgba(236,234,246,0.12)"/>
+  <rect x="520" y="358" width="200" height="8" rx="4" fill="rgba(236,234,246,0.12)"/>
+  <circle cx="740" cy="313" r="10" fill="#FF4A11">
+    <animate attributeName="opacity" values="1;0.25;1" dur="1.6s" repeatCount="indefinite"/>
+  </circle>
+  <text x="640" y="415" text-anchor="middle" font-family="monospace" font-size="22" fill="rgba(236,234,246,0.65)" letter-spacing="4">ARDUINO UNO · IR FLAME SENSORS</text>
+  <text x="640" y="560" text-anchor="middle" font-family="monospace" font-size="16" fill="rgba(236,234,246,0.35)" letter-spacing="2">~95% DETECTION ACCURACY · BUZZER + LED ALERT CHAIN</text>
+</svg>

@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dhairya Kumar — I ship products, not just repos</title>
+  <meta name="description" content="Dhairya Kumar — first-year CSE student and full-stack developer. Builder of LaunchFolio, Community Hero, VisionTrack and more. Two live products, one very shiny blob.">
+  <meta property="og:title" content="Dhairya Kumar — I ship products, not just repos">
+  <meta property="og:description" content="First-year CSE student with two live products. Full-stack · AI · Android · Arduino.">
+  <meta property="og:image" content="https://github.com/dhairyakumar018.png">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🫧</text></svg>">
+  <link rel="preconnect" href="https://api.fontshare.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&f[]=satoshi@400,500,700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap">
+  <script>(function(){try{var t=localStorage.getItem('dk-theme');if(t!=='light'&&t!=='dark'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';}document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"></script>
+  <style>
+    :root {
+      --bg: #07060B; --tx: #ECEAF6; --tx2: rgba(236,234,246,0.5); --mut: #8E89A6; --chip: #B9B5CC;
+      --ac: #FF4A11; --vi: #6C5CFF;
+      --ln: rgba(236,234,246,0.12); --ln2: rgba(236,234,246,0.08); --ln3: rgba(236,234,246,0.3);
+      --card: linear-gradient(165deg, rgba(19,17,32,0.78), rgba(9,8,14,0.62));
+      --panel: rgba(17,15,27,0.98); --scrim: rgba(4,3,8,0.72);
+      --hd: linear-gradient(rgba(7,6,11,0.85), rgba(7,6,11,0));
+      --vig: radial-gradient(120% 120% at 50% 42%, rgba(7,6,11,0) 50%, rgba(7,6,11,0.82) 100%);
+      --tsh: 0 2px 30px rgba(7,6,11,0.6);
+      --grn: 0.05; --slot: rgba(255,255,255,0.04);
+    }
+    html[data-theme="light"] {
+      --bg: #F4F2EC; --tx: #17141F; --tx2: rgba(23,20,31,0.48); --mut: #6E6885; --chip: #4E4963;
+      --ac: #E8430F; --vi: #5B4BFF;
+      --ln: rgba(23,20,31,0.15); --ln2: rgba(23,20,31,0.09); --ln3: rgba(23,20,31,0.34);
+      --card: linear-gradient(165deg, rgba(255,255,255,0.86), rgba(255,255,255,0.55));
+      --panel: rgba(251,250,246,0.99); --scrim: rgba(23,20,31,0.42);
+      --hd: linear-gradient(rgba(244,242,236,0.9), rgba(244,242,236,0));
+      --vig: radial-gradient(120% 120% at 50% 42%, rgba(244,242,236,0) 55%, rgba(244,242,236,0.88) 100%);
+      --tsh: none;
+      --grn: 0.055; --slot: rgba(23,20,31,0.05);
+    }
+    html { scroll-behavior: smooth; background: var(--bg); }
+    body { margin: 0; background: var(--bg); color: var(--tx); font-family: 'Satoshi', ui-sans-serif, system-ui, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: clip; transition: background-color 0.5s ease, color 0.5s ease; }
+    a { color: var(--tx); }
+    a:hover { color: var(--ac); }
+    ::selection { background: var(--ac); color: var(--bg); }
+    @keyframes dk-pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.3; transform: scale(0.7); } }
+    @keyframes dk-scroll { 0% { transform: scaleY(0); transform-origin: top; } 45% { transform: scaleY(1); transform-origin: top; } 55% { transform: scaleY(1); transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
+    @keyframes dk-grain { 0%, 100% { transform: translate(0, 0); } 20% { transform: translate(-2%, 1.6%); } 40% { transform: translate(1.8%, -2%); } 60% { transform: translate(-1.5%, -1.4%); } 80% { transform: translate(2%, 2%); } }
+    @keyframes dk-fade { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes dk-pop { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes dk-popPanel { from { opacity: 0; transform: translateY(30px) scale(0.94); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+    .skip { position: fixed; top: -80px; left: 18px; z-index: 120; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--bg); background: var(--tx); padding: 10px 16px; border-radius: 999px; text-decoration: none; transition: top 0.25s ease; }
+    .skip:focus-visible { top: 16px; outline: 2px solid var(--vi); outline-offset: 3px; }
+
+    .navlink { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mut); text-decoration: none; background-image: linear-gradient(currentColor, currentColor); background-repeat: no-repeat; background-position: 0 100%; background-size: 0% 1px; transition: background-size 0.35s cubic-bezier(0.22,1,0.36,1), color 0.25s; }
+    .navlink:hover { background-size: 100% 1px; color: var(--tx); }
+    .navlink:focus-visible { outline: 2px solid var(--vi); outline-offset: 4px; }
+
+    .theme-btn { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 999px; border: 1px solid var(--ln); background: transparent; color: var(--tx); cursor: pointer; padding: 0; transition: border-color 0.25s, transform 0.4s cubic-bezier(0.22,1,0.36,1); }
+    .theme-btn:hover { border-color: var(--ln3); transform: rotate(40deg); }
+    .theme-btn:focus-visible { outline: 2px solid var(--vi); outline-offset: 3px; }
+
+    .btn-acc { display: inline-flex; align-items: center; gap: 10px; background: var(--ac); color: #0A0910; text-decoration: none; font-weight: 700; font-size: 15px; padding: 17px 30px; border-radius: 999px; transition: filter 0.25s; }
+    .btn-acc:hover { filter: brightness(1.12); color: #0A0910; }
+    .btn-acc:focus-visible { outline: 2px solid var(--vi); outline-offset: 4px; }
+    .btn-line { display: inline-flex; align-items: center; gap: 10px; border: 1px solid var(--ln3); color: var(--tx); text-decoration: none; font-weight: 500; font-size: 15px; padding: 16px 30px; border-radius: 999px; transition: border-color 0.25s, color 0.25s; }
+    .btn-line:hover { border-color: var(--tx); color: var(--tx); }
+    .btn-line:focus-visible { outline: 2px solid var(--vi); outline-offset: 4px; }
+
+    .card-title-btn { background: none; border: 0; padding: 0; margin: 0; text-align: left; cursor: pointer; font-family: 'Clash Display', sans-serif; font-weight: 600; font-size: clamp(26px, 2.2vw, 34px); letter-spacing: -0.01em; line-height: 1.05; color: var(--tx); transition: color 0.25s; }
+    .card-title-btn:hover { color: var(--vi); }
+    .card-title-btn:focus-visible { outline: 2px solid var(--vi); outline-offset: 4px; }
+    .card-title-btn::before { content: ''; position: absolute; inset: 0; cursor: pointer; }
+
+    .close-btn { flex-shrink: 0; width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--ln); background: transparent; color: var(--tx); cursor: pointer; font-size: 15px; line-height: 1; display: inline-flex; align-items: center; justify-content: center; padding: 0; transition: border-color 0.25s, transform 0.4s cubic-bezier(0.22,1,0.36,1); }
+    .close-btn:hover { border-color: var(--ln3); transform: rotate(90deg); }
+    .close-btn:focus-visible { outline: 2px solid var(--vi); outline-offset: 3px; }
+
+    .cellbtn { aspect-ratio: 1; width: 100%; min-height: 56px; border-radius: 12px; border: 1px solid var(--ln); background: transparent; color: var(--ac); font-family: 'JetBrains Mono', monospace; font-size: 26px; line-height: 1; padding: 0; cursor: pointer; transition: border-color 0.2s, background 0.2s, transform 0.15s; }
+    .cellbtn:hover:not(:disabled) { border-color: var(--ln3); transform: translateY(-2px); }
+    .cellbtn:focus-visible { outline: 2px solid var(--vi); outline-offset: 2px; }
+    .cellbtn:disabled { cursor: default; }
+
+    .fld { display: block; width: 100%; box-sizing: border-box; margin-top: 8px; background: var(--slot); border: 1px solid var(--ln); border-radius: 10px; padding: 12px 14px; font-family: 'Satoshi', ui-sans-serif, sans-serif; font-size: 14.5px; color: var(--tx); transition: border-color 0.25s; }
+    .fld:focus { border-color: var(--vi); outline: 2px solid var(--vi); outline-offset: 1px; }
+    .fld::placeholder { color: var(--tx2); }
+
+    .send-btn { display: inline-flex; align-items: center; gap: 9px; background: var(--ac); color: #0A0910; border: 0; text-decoration: none; font-weight: 700; font-size: 14.5px; padding: 14px 28px; border-radius: 999px; cursor: pointer; font-family: 'Satoshi', ui-sans-serif, sans-serif; transition: filter 0.25s; }
+    .send-btn:hover { filter: brightness(1.12); }
+    .send-btn:focus-visible { outline: 2px solid var(--vi); outline-offset: 3px; }
+
+    .rematch-btn { align-self: flex-start; border: 1px solid var(--ln3); background: transparent; color: var(--tx); border-radius: 999px; padding: 10px 24px; font-weight: 500; font-size: 13.5px; font-family: 'Satoshi', ui-sans-serif, sans-serif; cursor: pointer; transition: border-color 0.25s; }
+    .rematch-btn:hover { border-color: var(--tx); }
+    .rematch-btn:focus-visible { outline: 2px solid var(--vi); outline-offset: 3px; }
+
+    .ulink { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--mut); text-decoration: none; background-image: linear-gradient(currentColor, currentColor); background-repeat: no-repeat; background-position: 0 100%; background-size: 0% 1px; transition: background-size 0.35s, color 0.25s; }
+    .ulink:hover { background-size: 100% 1px; color: var(--tx); }
+    .ulink:focus-visible { outline: 2px solid var(--vi); outline-offset: 3px; }
+
+    .biglink { display: inline-block; font-family: 'Clash Display', sans-serif; font-weight: 600; font-size: clamp(25px, 5.6vw, 84px); letter-spacing: -0.02em; line-height: 1.15; color: var(--tx); text-decoration: none; overflow-wrap: anywhere; background-image: linear-gradient(var(--ac), var(--ac)); background-repeat: no-repeat; background-position: 0 100%; background-size: 0% 0.07em; transition: background-size 0.5s cubic-bezier(0.22,1,0.36,1); }
+    .biglink:hover { background-size: 100% 0.07em; color: var(--tx); }
+    .biglink:focus-visible { outline: 2px solid var(--vi); outline-offset: 6px; }
+
+    .live-a { display: inline-flex; align-items: center; gap: 9px; background: var(--ac); color: #0A0910; text-decoration: none; font-weight: 700; font-size: 14.5px; padding: 14px 26px; border-radius: 999px; transition: filter 0.25s; }
+    .live-a:hover { filter: brightness(1.12); color: #0A0910; }
+    .live-a:focus-visible { outline: 2px solid var(--vi); outline-offset: 4px; }
+    .src-a { display: inline-flex; align-items: center; gap: 9px; border: 1px solid var(--ln3); color: var(--tx); text-decoration: none; font-weight: 500; font-size: 14.5px; padding: 13px 26px; border-radius: 999px; transition: border-color 0.25s; }
+    .src-a:hover { border-color: var(--tx); color: var(--tx); }
+    .src-a:focus-visible { outline: 2px solid var(--vi); outline-offset: 4px; }
+
+    .shot-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+    #proj-modal[hidden] { display: none !important; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+
+<a href="#hero" class="skip">Skip to content</a>
+
+<div aria-hidden="true" data-dk="stage" style="position:fixed;inset:0;z-index:0;overflow:hidden"></div>
+<div aria-hidden="true" style="position:fixed;inset:0;z-index:1;pointer-events:none;background:var(--vig)"></div>
+<div aria-hidden="true" data-dk="grain" style="position:fixed;inset:-60%;z-index:40;pointer-events:none;opacity:var(--grn);background-size:240px 240px;animation:dk-grain 1.3s steps(5) infinite"></div>
+
+<header style="position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px 20px;padding:16px clamp(20px, 4vw, 56px);background:var(--hd)">
+  <a href="#hero" style="font-family:'Clash Display',sans-serif;font-weight:700;font-size:19px;letter-spacing:0.01em;color:var(--tx);text-decoration:none">dk<span style="color:var(--ac)">.</span></a>
+  <nav aria-label="Primary" style="display:flex;align-items:center;gap:clamp(14px, 2.6vw, 30px)">
+    <a href="#work" class="navlink">Work</a>
+    <a href="#about" class="navlink">About</a>
+    <a href="#contact" class="navlink">Contact</a>
+    <button id="theme-toggle" class="theme-btn" aria-label="Switch to light mode" title="Switch to light mode">
+      <svg id="icon-sun" aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:block"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+      <svg id="icon-moon" aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"></path></svg>
+    </button>
+    <span style="display:inline-flex;align-items:center;gap:8px;border:1px solid var(--ln);border-radius:999px;padding:7px 14px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--mut);white-space:nowrap"><span style="width:6px;height:6px;border-radius:99px;background:var(--ac);animation:dk-pulse 2.2s ease-in-out infinite"></span>Open to internships</span>
+  </nav>
+</header>
+
+<main style="position:relative;z-index:2">
+
+  <section id="hero" data-screen-label="Hero" aria-labelledby="hero-title" style="position:relative;min-height:100svh;display:flex;align-items:center;padding:150px 0 130px;box-sizing:border-box;cursor:grab">
+    <div style="width:min(1240px, calc(100% - clamp(40px, 8vw, 120px)));margin:0 auto">
+      <p data-reveal="0" style="display:flex;align-items:center;gap:12px;margin:0 0 30px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mut)"><span style="color:var(--ac)">●</span>Dhairya Kumar — Full-stack · AI · Android</p>
+      <h1 id="hero-title" data-reveal="90" style="margin:0;font-family:'Clash Display',sans-serif;font-weight:600;font-size:clamp(46px, 10.2vw, 150px);line-height:0.98;letter-spacing:-0.025em;color:var(--tx);text-shadow:var(--tsh)">
+        <span style="display:block">I <em style="font-style:normal;color:var(--ac)">ship</em> products,</span>
+        <span style="display:block;color:var(--tx2)">not just repos.</span>
+      </h1>
+      <p data-reveal="200" style="max-width:620px;margin:30px 0 0;font-size:clamp(15.5px, 1.35vw, 18px);line-height:1.7;color:var(--mut);text-shadow:var(--tsh)">First-year CSE student who'd rather ship a real product than finish another tutorial. My work lives on real domains, serves real users, and occasionally beeps at fires.</p>
+      <div data-reveal="300" style="display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:42px">
+        <a href="#work" data-magnet class="btn-acc">See the work <span aria-hidden="true">↓</span></a>
+        <a href="#contact" data-magnet class="btn-line">Say hello</a>
+      </div>
+    </div>
+    <div style="position:absolute;bottom:30px;left:0;right:0">
+      <div style="width:min(1240px, calc(100% - clamp(40px, 8vw, 120px)));margin:0 auto;display:flex;justify-content:space-between;align-items:flex-end;gap:20px">
+        <span data-reveal="450" style="display:inline-flex;flex-direction:column;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.24em;text-transform:uppercase;color:var(--mut)">Scroll<span style="display:block;width:1px;height:44px;background:linear-gradient(var(--tx), transparent);animation:dk-scroll 2.4s cubic-bezier(0.6,0.1,0.3,0.9) infinite"></span></span>
+        <span data-reveal="450" data-dk="draghint" style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.24em;text-transform:uppercase;color:var(--mut);text-align:right">Drag the blob — it swirls. Click it, too.</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="work" data-screen-label="Selected Work" aria-labelledby="work-title" style="position:relative;padding:clamp(110px, 15vh, 170px) 0;scroll-margin-top:70px">
+    <div style="width:min(1240px, calc(100% - clamp(40px, 8vw, 120px)));margin:0 auto">
+      <div data-reveal="0" style="display:flex;align-items:center;gap:12px"><span style="width:8px;height:8px;border-radius:99px;background:var(--ac)"></span><span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mut)">01 / Selected work</span></div>
+      <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:18px 40px">
+        <h2 id="work-title" data-reveal="80" style="margin:22px 0 0;font-family:'Clash Display',sans-serif;font-weight:600;font-size:clamp(38px, 6.4vw, 92px);line-height:0.98;letter-spacing:-0.02em;color:var(--tx)">Shipped, not shelved.</h2>
+        <p data-reveal="160" style="margin:0;max-width:260px;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.7;color:var(--mut)">Six builds that made it past localhost — two live on real infra right now. Click any card for the full story.</p>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(min(100%, 310px), 1fr));gap:clamp(16px, 2vw, 26px);margin-top:clamp(44px, 7vh, 76px)">
+
+        <div data-reveal="0" style="min-width:0">
+          <article data-tilt style="position:relative;display:flex;flex-direction:column;gap:18px;height:100%;box-sizing:border-box;padding:clamp(20px, 2.2vw, 28px);border:1px solid var(--ln);border-radius:20px;background:var(--card);backdrop-filter:blur(10px)">
+            <div style="position:relative;width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden;border:1px solid var(--ln2);background:var(--slot)">
+              <img class="shot-img" src="assets/p-launchfolio.jpg" alt="LaunchFolio — live site screenshot" loading="lazy">
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--mut)">01 · 2025</span>
+              <span style="display:inline-flex;align-items:center;gap:7px;border:1px solid var(--ln);border-radius:999px;padding:5px 12px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--tx)"><span style="width:6px;height:6px;border-radius:99px;background:var(--ac);animation:dk-pulse 2.2s ease-in-out infinite"></span>Live</span>
+            </div>
+            <h3 style="margin:0;line-height:1.05"><button class="card-title-btn" data-open="launchfolio">LaunchFolio</button></h3>
+            <p style="margin:0;flex-grow:1;font-size:15px;line-height:1.6;color:var(--mut)">An AI resume &amp; portfolio builder — fill a form, get a polished site and a one-click PDF. Real domain, real users.</p>
+            <div style="display:flex;flex-wrap:wrap;gap:8px">
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:6px 12px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--chip)">Node.js</span>
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:6px 12px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--chip)">Cloudflare Pages</span>
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:6px 12px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--chip)">D1</span>
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:6px 12px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--chip)">AI</span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;border-top:1px solid var(--ln2);padding-top:15px">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--mut)">launchfolio.tech</span>
+              <span aria-hidden="true" style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ac)">details +</span>
+            </div>
+          </article>
+        </div>
+
+        <div data-reveal="110" style="min-width:0">
+          <article data-tilt style="position:relative;display:flex;flex-direction:column;gap:18px;height:100%;box-sizing:border-box;padding:clamp(20px, 2.2vw, 28px);border:1px solid var(--ln);border-radius:20px;background:var(--card);backdrop-filter:blur(10px)">
+            <div style="position:relative;width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden;border:1px solid var(--ln2);background:var(--slot)">
+              <img class="shot-img" src="assets/p-community-hero.jpg" alt="Community Hero — live app screenshot" loading="lazy">
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--mut)">02 · 2026</span>
+              <span style="display:inline-flex;align-items:center;gap:7px;border:1px solid var(--ln);border-radius:999px;padding:5px 12px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--tx)"><span style="width:6px;height:6px;border-radius:99px;background:var(--ac);animation:dk-pulse 2.2s ease-in-out infinite"></span>Live</span>
+            </div>
+            <h3 style="margin:0;line-height:1.05"><button class="card-title-btn" data-open="community-hero">Community Hero</button></h3>
+            <p style="margin:0;flex-grow:1;font-size:15px;line-height:1.6;color:var(--mut)">A civic platform where AI reads your report — broken streetlight, overflowing bin — and routes it to the right municipal desk.</p>
+            <div style="display:flex;flex-wrap:wrap;gap:8px">
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:6px 12px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--chip)">TypeScript</span>
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:6px 12px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--chip)">Google Cloud Run</span>
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:6px 12px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--chip)">Maps</span>
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:6px 12px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--chip)">AI routing</span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;border-top:1px solid var(--ln2);padding-top:15px">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--mut)">cloud run · github</span>
+              <span aria-hidden="true" style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ac)">details +</span>
+            </div>
+          </article>
+        </div>
+
+        <div data-reveal="220" style="min-width:0">
+          <article data-tilt style="position:relative;display:flex;flex-direction:column;gap:18px;height:100%;box-sizing:border-box;padding:clamp(20px, 2.2vw, 28px);border:1px solid var(--ln);border-radius:20px;background:var(--card);backdrop-filter:blur(10px)">
+            <div style="position:relative;width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden;border:1px solid var(--ln2);background:var(--slot)">
+              <img class="shot-img" src="assets/p-visiontrack.png" alt="VisionTrack repository preview" loading="lazy">
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--mut)">03 · 2026</span>
+              <span style="display:inline-flex;align-items:center;gap:7px;border:1px solid var(--ln);border-radius:999px;padding:5px 12px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--tx)"><span style="width:6px;height:6px;border-radius:99px;background:var(--vi)"></span>Shipped</span>
+            </div>
+            <h3 style="margin:0;line-height:1.05"><button class="card-title-btn" data-open="visiontrack">VisionTrack</button></h3>
+            <p style="margin:0;flex-grow:1;font-size:15px;line-height:1.6;color:var(--mut)">Real-time object detection and tracking — YOLOv8 + Deep SORT streaming into a live dashboard with a 3D view.</p>
+            <div style="display:flex;flex-wrap:wrap;gap:8px">
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:6px 12px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--chip)">Python</span>
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:6px 12px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--chip)">Flask</span>
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:6px 12px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--chip)">OpenCV</span>
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:6px 12px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--chip)">YOLOv8</span>
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:6px 12px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--chip)">Three.js</span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;border-top:1px solid var(--ln2);padding-top:15px">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--mut)">github / VisionTrack</span>
+              <span aria-hidden="true" style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ac)">details +</span>
+            </div>
+          </article>
+        </div>
+
+        <div data-reveal="0" style="min-width:0">
+          <article data-tilt style="position:relative;display:flex;flex-direction:column;gap:18px;height:100%;box-sizing:border-box;padding:clamp(20px, 2.2vw, 28px);border:1px solid var(--ln);border-radius:20px;background:var(--card);backdrop-filter:blur(10px)">
+            <div style="position:relative;width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden;border:1px solid var(--ln2);background:var(--slot)">
+              <img class="shot-img" src="assets/p-lexiflux.png" alt="LexiFlux repository preview" loading="lazy">
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--mut)">04 · 2026</span>
+              <span style="display:inline-flex;align-items:center;gap:7px;border:1px solid var(--ln);border-radius:999px;padding:5px 12px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--tx)"><span style="width:6px;height:6px;border-radius:99px;background:var(--vi)"></span>Shipped</span>
+            </div>
+            <h3 style="margin:0;line-height:1.05"><button class="card-title-btn" data-open="lexiflux">LexiFlux</button></h3>
+            <p style="margin:0;flex-grow:1;font-size:15px;line-height:1.6;color:var(--mut)">An AI translation suite — auto language detection, Gemini-powered translation, and native-accent text-to-speech.</p>
+            <div style="display:flex;flex-wrap:wrap;gap:8px">
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:6px 12px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--chip)">React</span>
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:6px 12px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--chip)">TypeScript</span>
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:6px 12px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--chip)">Express</span>
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:6px 12px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--chip)">Gemini API</span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;border-top:1px solid var(--ln2);padding-top:15px">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--mut)">github / LexiFlux</span>
+              <span aria-hidden="true" style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ac)">details +</span>
+            </div>
+          </article>
+        </div>
+
+        <div data-reveal="110" style="min-width:0">
+          <article data-tilt style="position:relative;display:flex;flex-direction:column;gap:18px;height:100%;box-sizing:border-box;padding:clamp(20px, 2.2vw, 28px);border:1px solid var(--ln);border-radius:20px;background:var(--card);backdrop-filter:blur(10px)">
+            <div style="position:relative;width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden;border:1px solid var(--ln2);background:var(--slot)">
+              <img class="shot-img" src="assets/p-firewatch.svg" alt="Stylized circuit illustration of the fire detection rig" loading="lazy">
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--mut)">05 · 2025</span>
+              <span style="display:inline-flex;align-items:center;gap:7px;border:1px solid var(--ln);border-radius:999px;padding:5px 12px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--tx)"><span style="width:6px;height:6px;border-radius:99px;background:var(--mut)"></span>Built</span>
+            </div>
+            <h3 style="margin:0;line-height:1.05"><button class="card-title-btn" data-open="firewatch">Fire Detection System</button></h3>
+            <p style="margin:0;flex-grow:1;font-size:15px;line-height:1.6;color:var(--mut)">Arduino + IR flame sensors, ~95% detection accuracy in testing, with a buzzer + LED alert chain.</p>
+            <div style="display:flex;flex-wrap:wrap;gap:8px">
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:6px 12px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--chip)">C++</span>
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:6px 12px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--chip)">Arduino Uno</span>
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:6px 12px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--chip)">IR sensors</span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;border-top:1px solid var(--ln2);padding-top:15px">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--mut)">arduino uno</span>
+              <span aria-hidden="true" style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ac)">details +</span>
+            </div>
+          </article>
+        </div>
+
+        <div data-reveal="220" style="min-width:0">
+          <article data-tilt style="position:relative;display:flex;flex-direction:column;gap:18px;height:100%;box-sizing:border-box;padding:clamp(20px, 2.2vw, 28px);border:1px solid var(--ln);border-radius:20px;background:var(--card);backdrop-filter:blur(10px)">
+            <div style="position:relative;width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden;border:1px solid var(--ln2);background:var(--slot)">
+              <img class="shot-img" src="assets/p-axis.png" alt="AXiS repository preview" loading="lazy">
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--mut)">06 · 2026</span>
+              <span style="display:inline-flex;align-items:center;gap:7px;border:1px solid var(--ln);border-radius:999px;padding:5px 12px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--tx)"><span style="width:6px;height:6px;border-radius:99px;background:var(--vi)"></span>In design</span>
+            </div>
+            <h3 style="margin:0;line-height:1.05"><button class="card-title-btn" data-open="axis">AXiS</button></h3>
+            <p style="margin:0;flex-grow:1;font-size:15px;line-height:1.6;color:var(--mut)">An AI "operating layer" — persistent memory, vision, voice, and IoT hooks. The big bet.</p>
+            <div style="display:flex;flex-wrap:wrap;gap:8px">
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:6px 12px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--chip)">Electron</span>
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:6px 12px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--chip)">FastAPI</span>
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:6px 12px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--chip)">Ollama</span>
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:6px 12px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--chip)">LangChain</span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;border-top:1px solid var(--ln2);padding-top:15px">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--mut)">github / AXiS</span>
+              <span aria-hidden="true" style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ac)">details +</span>
+            </div>
+          </article>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="about" data-screen-label="About" aria-labelledby="about-title" style="position:relative;padding:clamp(110px, 15vh, 170px) 0;scroll-margin-top:70px">
+    <div style="width:min(1240px, calc(100% - clamp(40px, 8vw, 120px)));margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit, minmax(min(100%, 380px), 1fr));gap:clamp(40px, 6vw, 90px);align-items:start">
+      <div>
+        <div data-reveal="0" style="display:flex;align-items:center;gap:12px"><span style="width:8px;height:8px;border-radius:99px;background:var(--ac)"></span><span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mut)">02 / About</span></div>
+        <h2 id="about-title" data-reveal="80" style="margin:22px 0 0;font-family:'Clash Display',sans-serif;font-weight:600;font-size:clamp(34px, 4.6vw, 64px);line-height:1.02;letter-spacing:-0.02em;color:var(--tx)">Learning in public, shipping in production.</h2>
+        <p data-reveal="160" style="margin:30px 0 0;font-size:clamp(15.5px, 1.3vw, 17.5px);line-height:1.75;color:var(--mut)">The pattern so far: learn a thing, then immediately make it real. Learning web dev became <strong style="color:var(--tx);font-weight:500">LaunchFolio</strong>, a live product with real users. A civic-tech idea became <strong style="color:var(--tx);font-weight:500">Community Hero</strong>, running on Google Cloud. An afternoon with an Arduino became a <strong style="color:var(--tx);font-weight:500">fire detector</strong> with ~95% accuracy and a very loud buzzer.</p>
+        <p data-reveal="220" style="margin:20px 0 0;font-size:clamp(15.5px, 1.3vw, 17.5px);line-height:1.75;color:var(--mut)">Right now I'm deep in <strong style="color:var(--tx);font-weight:500">Jetpack Compose</strong> — convincing Android that a web dev can be trusted — and designing <strong style="color:var(--tx);font-weight:500">AXiS</strong>, an AI operating layer with persistent memory, vision, and voice. That one's the big bet.</p>
+        <p data-reveal="280" style="margin:34px 0 0;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.8;color:var(--mut)">B.Tech CSE @ NIET · Class of 2029<br>Greater Noida, India</p>
+      </div>
+      <div data-reveal="150">
+        <div style="border:1px solid var(--ln);border-radius:22px;background:var(--card);backdrop-filter:blur(8px);padding:clamp(24px, 3vw, 36px);display:flex;flex-direction:column;gap:26px">
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mut)">Languages</span>
+            <div style="display:flex;flex-wrap:wrap;gap:8px">
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:7px 13px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--chip)">Python</span>
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:7px 13px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--chip)">JavaScript</span>
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:7px 13px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--chip)">TypeScript</span>
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:7px 13px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--chip)">Kotlin</span>
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:7px 13px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--chip)">Java</span>
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:7px 13px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--chip)">C++</span>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mut)">Frontend</span>
+            <div style="display:flex;flex-wrap:wrap;gap:8px">
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:7px 13px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--chip)">React</span>
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:7px 13px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--chip)">Next.js</span>
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:7px 13px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--chip)">Tailwind</span>
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:7px 13px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--chip)">Jetpack Compose</span>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mut)">Backend &amp; cloud</span>
+            <div style="display:flex;flex-wrap:wrap;gap:8px">
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:7px 13px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--chip)">Node.js</span>
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:7px 13px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--chip)">REST APIs</span>
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:7px 13px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--chip)">Cloudflare Pages · D1</span>
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:7px 13px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--chip)">Google Cloud Run</span>
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:7px 13px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--chip)">Git</span>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mut)">AI &amp; hardware</span>
+            <div style="display:flex;flex-wrap:wrap;gap:8px">
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:7px 13px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--chip)">YOLOv8</span>
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:7px 13px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--chip)">Gemini API</span>
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:7px 13px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--chip)">LangChain</span>
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:7px 13px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--chip)">Ollama</span>
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:7px 13px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--chip)">Arduino</span>
+            </div>
+          </div>
+          <div style="border-top:1px solid var(--ln2);padding-top:22px;display:flex;flex-direction:column;gap:10px">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mut)">On the record</span>
+            <p style="margin:0;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:2;color:var(--mut)"><span style="color:var(--ac)">→</span> Android Basics with Compose — Google, '26<br><span style="color:var(--ac)">→</span> Data Analytics simulation — Deloitte x Forage, '26<br><span style="color:var(--ac)">→</span> Shortlisted — Google Gemini Student Ambassador, '26<br><span style="color:var(--ac)">→</span> Innovate X Hackathon — NIET, '26</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" data-screen-label="Contact" aria-labelledby="contact-title" style="position:relative;padding:clamp(120px, 16vh, 180px) 0 0;scroll-margin-top:70px">
+    <div style="width:min(1240px, calc(100% - clamp(40px, 8vw, 120px)));margin:0 auto">
+      <div data-reveal="0" style="display:flex;align-items:center;gap:12px"><span style="width:8px;height:8px;border-radius:99px;background:var(--ac)"></span><span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mut)">03 / Contact</span></div>
+      <h2 id="contact-title" data-reveal="80" style="margin:22px 0 0;font-family:'Clash Display',sans-serif;font-weight:600;font-size:clamp(40px, 7vw, 104px);line-height:0.98;letter-spacing:-0.02em;color:var(--tx);max-width:900px">Got something worth building?</h2>
+      <p data-reveal="160" style="margin:26px 0 0;max-width:560px;font-size:clamp(15.5px, 1.3vw, 17.5px);line-height:1.7;color:var(--mut)">Internship, collab, or a weird idea that deserves to exist — my inbox responds faster than my CI pipeline.</p>
+      <div data-reveal="240" style="margin-top:clamp(40px, 6vh, 64px)">
+        <a href="mailto:gdhairya29@gmail.com" class="biglink">gdhairya29@gmail.com</a>
+      </div>
+      <div data-reveal="280" style="display:grid;grid-template-columns:repeat(auto-fit, minmax(min(100%, 330px), 1fr));gap:clamp(16px, 2vw, 26px);max-width:1020px;margin-top:clamp(48px, 7vh, 76px)">
+        <form id="contact-form" aria-label="Send Dhairya a message" style="display:flex;flex-direction:column;gap:16px;box-sizing:border-box;padding:clamp(22px, 2.6vw, 32px);border:1px solid var(--ln);border-radius:20px;background:var(--card);backdrop-filter:blur(10px)">
+          <h3 style="margin:0;font-family:'Clash Display',sans-serif;font-weight:600;font-size:24px;letter-spacing:-0.01em;color:var(--tx)">Drop me a line</h3>
+          <p style="margin:-6px 0 2px;font-size:13.5px;line-height:1.6;color:var(--mut)">Fill it in, hit send — it lands straight in my inbox.</p>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(130px, 1fr));gap:12px">
+            <label style="display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--mut)">Name
+              <input id="dk-f-name" name="name" autocomplete="name" placeholder="Your name" class="fld">
+            </label>
+            <label style="display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--mut)">Email
+              <input id="dk-f-email" name="email" type="email" autocomplete="email" placeholder="you@work.com" class="fld">
+            </label>
+          </div>
+          <label style="display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--mut)">Message
+            <textarea id="dk-f-msg" name="message" required rows="4" placeholder="An internship, a collab, a bug you found…" class="fld" style="line-height:1.6;resize:vertical;min-height:96px"></textarea>
+          </label>
+          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:14px">
+            <button type="submit" class="send-btn">Send it <span aria-hidden="true">→</span></button>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.6;color:var(--mut)">Opens your mail app → gdhairya29@gmail.com</span>
+          </div>
+        </form>
+        <div style="display:flex;flex-direction:column;gap:16px;box-sizing:border-box;padding:clamp(22px, 2.6vw, 32px);border:1px solid var(--ln);border-radius:20px;background:var(--card);backdrop-filter:blur(10px)">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap">
+            <h3 style="margin:0;font-family:'Clash Display',sans-serif;font-weight:600;font-size:24px;letter-spacing:-0.01em;color:var(--tx)">Or, beat the blob</h3>
+            <span id="g-score" style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--mut)">You 0 · Blob 0 · Draws 0</span>
+          </div>
+          <p style="margin:-6px 0 2px;font-size:13.5px;line-height:1.6;color:var(--mut)">Tic-tac-toe. You're <span style="color:var(--ac)">✕</span>, the blob's <span style="color:var(--vi)">○</span> — and it gloats when it wins.</p>
+          <div id="g-board" style="display:grid;grid-template-columns:repeat(3, 1fr);gap:10px;max-width:272px">
+            <button class="cellbtn" data-cell="0" aria-label="Cell 1 of 9 — empty"></button>
+            <button class="cellbtn" data-cell="1" aria-label="Cell 2 of 9 — empty"></button>
+            <button class="cellbtn" data-cell="2" aria-label="Cell 3 of 9 — empty"></button>
+            <button class="cellbtn" data-cell="3" aria-label="Cell 4 of 9 — empty"></button>
+            <button class="cellbtn" data-cell="4" aria-label="Cell 5 of 9 — empty"></button>
+            <button class="cellbtn" data-cell="5" aria-label="Cell 6 of 9 — empty"></button>
+            <button class="cellbtn" data-cell="6" aria-label="Cell 7 of 9 — empty"></button>
+            <button class="cellbtn" data-cell="7" aria-label="Cell 8 of 9 — empty"></button>
+            <button class="cellbtn" data-cell="8" aria-label="Cell 9 of 9 — empty"></button>
+          </div>
+          <p id="g-status" role="status" style="margin:2px 0 0;min-height:20px;font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--tx)">Your move — you're ✕.</p>
+          <button id="g-reset" class="rematch-btn">Rematch</button>
+        </div>
+      </div>
+
+      <div data-reveal="320" style="display:flex;flex-wrap:wrap;gap:16px 30px;margin-top:clamp(40px, 6vh, 60px)">
+        <a href="https://github.com/dhairyakumar018" target="_blank" rel="noopener" class="ulink">GitHub ↗</a>
+        <a href="https://www.linkedin.com/in/dhairya-kumar-a77b2b35b" target="_blank" rel="noopener" class="ulink">LinkedIn ↗</a>
+        <a href="https://launchfolio.tech" target="_blank" rel="noopener" class="ulink">launchfolio.tech ↗</a>
+      </div>
+      <footer style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 28px;border-top:1px solid var(--ln2);margin-top:clamp(80px, 11vh, 130px);padding:26px 0 36px">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.1em;color:var(--mut)">© 2026 Dhairya Kumar</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.1em;color:var(--mut)">Built by hand — one file, Three.js, one very shiny blob</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.1em;color:var(--mut)">60fps or bust</span>
+      </footer>
+    </div>
+  </section>
+
+  <div id="proj-modal" data-dkmodal role="dialog" aria-modal="true" aria-labelledby="proj-title" hidden style="position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:clamp(14px, 3vw, 40px);box-sizing:border-box">
+    <div id="modal-scrim" style="position:absolute;inset:0;background:var(--scrim);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);animation:dk-fade 0.35s ease both"></div>
+    <div data-modal-panel tabindex="-1" style="position:relative;width:min(760px, 100%);max-height:min(86vh, 100%);overflow:auto;background:var(--panel);border:1px solid var(--ln);border-radius:24px;padding:clamp(24px, 4.5vw, 46px);box-sizing:border-box;outline:none;animation:dk-popPanel 0.5s cubic-bezier(0.22,1,0.36,1) both">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;animation:dk-pop 0.55s cubic-bezier(0.22,1,0.36,1) both;animation-delay:0.05s">
+        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+          <span id="m-num" style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--mut)"></span>
+          <span style="display:inline-flex;align-items:center;gap:7px;border:1px solid var(--ln);border-radius:999px;padding:5px 12px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--tx)"><span id="m-dot" style="width:6px;height:6px;border-radius:99px;background:var(--mut)"></span><span id="m-status"></span></span>
+        </div>
+        <button id="modal-close" class="close-btn" aria-label="Close project details">✕</button>
+      </div>
+      <h3 id="proj-title" style="margin:22px 0 0;font-family:'Clash Display',sans-serif;font-weight:600;font-size:clamp(34px, 6.4vw, 62px);line-height:1;letter-spacing:-0.02em;color:var(--tx);animation:dk-pop 0.55s cubic-bezier(0.22,1,0.36,1) both;animation-delay:0.1s"></h3>
+      <p id="m-tag" style="margin:12px 0 0;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--ac);animation:dk-pop 0.55s cubic-bezier(0.22,1,0.36,1) both;animation-delay:0.16s"></p>
+      <p id="m-desc" style="margin:22px 0 0;font-size:15.5px;line-height:1.75;color:var(--mut);animation:dk-pop 0.55s cubic-bezier(0.22,1,0.36,1) both;animation-delay:0.22s"></p>
+      <div style="margin-top:28px;animation:dk-pop 0.55s cubic-bezier(0.22,1,0.36,1) both;animation-delay:0.28s">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mut)">Highlights</span>
+        <div id="m-features" style="display:flex;flex-direction:column;gap:10px;margin-top:14px"></div>
+      </div>
+      <div style="margin-top:26px;animation:dk-pop 0.55s cubic-bezier(0.22,1,0.36,1) both;animation-delay:0.34s">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mut)">Stack</span>
+        <div id="m-stack" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px"></div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:34px;border-top:1px solid var(--ln2);padding-top:26px;animation:dk-pop 0.55s cubic-bezier(0.22,1,0.36,1) both;animation-delay:0.4s">
+        <a id="m-live" href="#" target="_blank" rel="noopener" class="live-a" hidden>Visit live site <span aria-hidden="true">↗</span></a>
+        <a id="m-src" href="#" target="_blank" rel="noopener" class="src-a" hidden>Source code <span aria-hidden="true">↗</span></a>
+        <span id="m-note" style="font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--mut)" hidden></span>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+(function () {
+  'use strict';
+
+  var PARTICLES = 3500;
+  var ROBOT_TINT = true;
+
+  var PROJECTS = {
+    'launchfolio': { num: '01', year: '2025', status: 'Live', dot: 'var(--ac)',
+      title: 'LaunchFolio', tag: 'Your resume, but it ships itself.',
+      desc: 'LaunchFolio started with a simple question: why does making a decent portfolio take a whole weekend? Fill one form and it generates a clean hosted portfolio plus an ATS-friendly resume PDF — no design skills required. It runs on a real domain with real users, which has taught me more about production than any tutorial ever did.',
+      features: ['One form in — polished portfolio + resume PDF out', 'AI-assisted copy so blank-page syndrome is not a blocker', 'Edge-hosted on Cloudflare Pages with D1 storage', 'Real users, real bug reports, real 2am fixes'],
+      stack: ['Node.js', 'Cloudflare Pages', 'D1', 'AI'],
+      liveUrl: 'https://launchfolio.tech', srcUrl: '', linkNote: '' },
+    'community-hero': { num: '02', year: '2026', status: 'Live', dot: 'var(--ac)',
+      title: 'Community Hero', tag: 'Report a pothole. AI files the paperwork.',
+      desc: 'Community Hero is a civic platform where residents report local issues — broken streetlights, overflowing bins — and AI classifies each report and routes it to the right municipal desk. Every report lands on a real-time map, so problems stop dying in inbox purgatory. Built for the Innovate X hackathon, then hardened and deployed on Google Cloud Run.',
+      features: ['AI reads each report and routes it to the right desk', 'Real-time map of every open issue in the area', 'Photo evidence attached to reports', 'Deployed on Google Cloud Run, asia-southeast1'],
+      stack: ['TypeScript', 'Google Cloud Run', 'Maps', 'AI routing'],
+      liveUrl: 'https://community-hero-1014571245061.asia-southeast1.run.app/', srcUrl: 'https://github.com/dhairyakumar018/Community__Hero', linkNote: '' },
+    'visiontrack': { num: '03', year: '2026', status: 'Shipped', dot: 'var(--vi)',
+      title: 'VisionTrack', tag: 'It counts cars so you don’t have to.',
+      desc: 'VisionTrack is a real-time computer-vision pipeline: YOLOv8 finds objects, Deep SORT keeps their identities straight across frames, and everything streams into a live dashboard with a Three.js 3D scene view. Built during my CodeAlpha internship work — with CSV export, because someone always asks for the spreadsheet.',
+      features: ['YOLOv8 detection with Deep SORT identity tracking', 'Live dashboard with a Three.js 3D scene view', 'Flask backend streaming detections in real time', 'One-click CSV export of every tracked object'],
+      stack: ['Python', 'Flask', 'OpenCV', 'YOLOv8', 'Three.js'],
+      liveUrl: '', srcUrl: 'https://github.com/dhairyakumar018/CodeAlpha_VisionTrack', linkNote: '' },
+    'lexiflux': { num: '04', year: '2026', status: 'Shipped', dot: 'var(--vi)',
+      title: 'LexiFlux', tag: 'Speaks 100+ languages with a native accent.',
+      desc: 'LexiFlux is an AI translation suite: paste anything and it auto-detects the language, translates it through the Gemini API, and reads the result back with native-accent text-to-speech. Translation history included — because you will absolutely re-translate the same sentence five times.',
+      features: ['Automatic language detection, no dropdown hunting', 'Gemini-powered translation', 'Native-accent text-to-speech playback', 'Persistent translation history'],
+      stack: ['React', 'TypeScript', 'Express', 'Gemini API'],
+      liveUrl: '', srcUrl: 'https://github.com/dhairyakumar018/CodeAlpha_Language_Translation_Tool', linkNote: '' },
+    'firewatch': { num: '05', year: '2025', status: 'Built', dot: 'var(--mut)',
+      title: 'Fire Detection System', tag: 'Spots a fire before you smell it.',
+      desc: 'A hardware build: an Arduino Uno wired to IR flame sensors, tuned to roughly 95% detection accuracy in testing. When it sees flame, a buzzer-and-LED alert chain goes off — loudly. My first proof that code can reach out and touch the physical world. Tested carefully. Very carefully.',
+      features: ['IR flame sensors on an Arduino Uno', '~95% detection accuracy in testing', 'Buzzer + LED alert chain', 'C++ firmware, hand-wired breadboard'],
+      stack: ['C++', 'Arduino Uno', 'IR sensors'],
+      liveUrl: '', srcUrl: '', linkNote: 'Hardware build — it lives on my desk, not on the cloud.' },
+    'axis': { num: '06', year: '2026', status: 'In design', dot: 'var(--vi)',
+      title: 'AXiS', tag: 'One AI layer over everything I own.',
+      desc: 'AXiS is the big one: an AI operating layer that remembers you between sessions, sees through vision models, listens and talks back, and reaches into IoT devices. Electron shell, FastAPI core, local-first models via Ollama with LangChain orchestration. Currently in design — this portfolio is technically procrastination from building it.',
+      features: ['Persistent memory across sessions', 'Vision + voice as first-class inputs', 'IoT hooks for real-world control', 'Local-first models via Ollama + LangChain'],
+      stack: ['Electron', 'FastAPI', 'Ollama', 'LangChain'],
+      liveUrl: '', srcUrl: 'https://github.com/dhairyakumar018/AXiS', linkNote: '' }
+  };
+
+  var app = {
+    reduced: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+    coarse: window.matchMedia('(pointer: coarse)').matches,
+    three: null, secIdx: 0, smoothP: undefined,
+    MOODS: [
+      { amp: 0.16, spd: 0.45 },
+      { amp: 0.26, spd: 0.75 },
+      { amp: 0.18, spd: 0.55 },
+      { amp: 0.38, spd: 1.2 }
+    ],
+    modalOpen: false, opener: null, botTimer: 0,
+    game: { board: [null,null,null,null,null,null,null,null,null], winner: null, winLine: [], thinking: false, sYou: 0, sBot: 0, sDraw: 0 }
+  };
+
+  // ---------- theme ----------
+  function cssVar(name) { return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+
+  function renderTheme() {
+    var dark = document.documentElement.getAttribute('data-theme') !== 'light';
+    document.getElementById('icon-sun').style.display = dark ? 'block' : 'none';
+    document.getElementById('icon-moon').style.display = dark ? 'none' : 'block';
+    var btn = document.getElementById('theme-toggle');
+    var label = dark ? 'Switch to light mode' : 'Switch to dark mode';
+    btn.setAttribute('aria-label', label);
+    btn.setAttribute('title', label);
+  }
+
+  function applyTheme(t) {
+    document.documentElement.setAttribute('data-theme', t);
+    renderTheme();
+    syncThreeTheme();
+  }
+
+  document.getElementById('theme-toggle').addEventListener('click', function () {
+    var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    try { localStorage.setItem('dk-theme', next); } catch (e) {}
+    applyTheme(next);
+  });
+
+  (function setupSystemTheme() {
+    var mq = window.matchMedia('(prefers-color-scheme: light)');
+    var onChange = function () {
+      var saved = null;
+      try { saved = localStorage.getItem('dk-theme'); } catch (e) {}
+      if (saved !== 'light' && saved !== 'dark') applyTheme(mq.matches ? 'light' : 'dark');
+    };
+    if (mq.addEventListener) mq.addEventListener('change', onChange);
+  })();
+
+  // ---------- grain ----------
+  (function setupGrainTexture() {
+    var grain = document.querySelector('[data-dk="grain"]');
+    if (!grain) return;
+    var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch"/></filter><rect width="240" height="240" filter="url(#n)"/></svg>';
+    grain.style.backgroundImage = 'url("data:image/svg+xml,' + encodeURIComponent(svg) + '")';
+  })();
+
+  // ---------- reveals ----------
+  (function setupReveals() {
+    var els = Array.prototype.slice.call(document.querySelectorAll('[data-reveal]'));
+    if (app.reduced || !els.length) return;
+    els.forEach(function (el) {
+      var d = parseInt(el.getAttribute('data-reveal') || '0', 10);
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(30px)';
+      el.style.transition = 'opacity 0.9s cubic-bezier(0.22,1,0.36,1) ' + d + 'ms, transform 0.9s cubic-bezier(0.22,1,0.36,1) ' + d + 'ms';
+    });
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) {
+          en.target.style.opacity = '1';
+          en.target.style.transform = 'translateY(0)';
+          io.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    els.forEach(function (el) { io.observe(el); });
+  })();
+
+  // ---------- magnetic buttons ----------
+  (function setupMagnets() {
+    if (app.reduced || app.coarse) return;
+    document.querySelectorAll('[data-magnet]').forEach(function (btn) {
+      var max = 13, k = 0.24;
+      btn.addEventListener('pointermove', function (e) {
+        var r = btn.getBoundingClientRect();
+        var dx = (e.clientX - (r.left + r.width / 2)) * k;
+        var dy = (e.clientY - (r.top + r.height / 2)) * k;
+        dx = Math.max(-max, Math.min(max, dx));
+        dy = Math.max(-max, Math.min(max, dy));
+        btn.style.transition = 'transform 0.12s ease-out, filter 0.25s, border-color 0.25s, color 0.25s';
+        btn.style.transform = 'translate(' + dx.toFixed(1) + 'px,' + dy.toFixed(1) + 'px)';
+      });
+      btn.addEventListener('pointerleave', function () {
+        btn.style.transition = 'transform 0.55s cubic-bezier(0.2,1,0.3,1.2), filter 0.25s, border-color 0.25s, color 0.25s';
+        btn.style.transform = 'translate(0,0)';
+      });
+    });
+  })();
+
+  // ---------- card tilt + glow ----------
+  (function setupTilt() {
+    if (app.reduced || app.coarse) return;
+    document.querySelectorAll('[data-tilt]').forEach(function (card) {
+      var baseBg = card.style.background;
+      card.addEventListener('pointermove', function (e) {
+        var r = card.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width;
+        var py = (e.clientY - r.top) / r.height;
+        var rx = (0.5 - py) * 5.5;
+        var ry = (px - 0.5) * 7.5;
+        card.style.transition = 'transform 0.1s ease-out, border-color 0.3s';
+        card.style.transform = 'perspective(950px) rotateX(' + rx.toFixed(2) + 'deg) rotateY(' + ry.toFixed(2) + 'deg) translateY(-4px)';
+        card.style.background = 'radial-gradient(540px circle at ' + (px * 100).toFixed(1) + '% ' + (py * 100).toFixed(1) + '%, rgba(108,92,255,0.13), rgba(108,92,255,0) 55%), ' + baseBg;
+        card.style.borderColor = 'var(--ln3)';
+      });
+      card.addEventListener('pointerleave', function () {
+        card.style.transition = 'transform 0.6s cubic-bezier(0.2,1,0.3,1), background 0.5s, border-color 0.5s';
+        card.style.transform = 'perspective(950px) rotateX(0deg) rotateY(0deg) translateY(0)';
+        card.style.background = baseBg;
+        card.style.borderColor = 'var(--ln)';
+      });
+    });
+  })();
+
+  // ---------- project modal ----------
+  var modal = document.getElementById('proj-modal');
+
+  function openProject(slug, openerEl) {
+    var p = PROJECTS[slug];
+    if (!p) return;
+    app.opener = openerEl || null;
+    document.getElementById('m-num').textContent = p.num + ' · ' + p.year;
+    document.getElementById('m-status').textContent = p.status;
+    document.getElementById('m-dot').style.background = p.dot;
+    document.getElementById('proj-title').textContent = p.title;
+    document.getElementById('m-tag').textContent = p.tag;
+    document.getElementById('m-desc').textContent = p.desc;
+    var feats = document.getElementById('m-features');
+    feats.innerHTML = '';
+    p.features.forEach(function (f) {
+      var row = document.createElement('div');
+      row.style.cssText = 'display:flex;gap:11px;align-items:baseline';
+      row.innerHTML = '<span aria-hidden="true" style="color:var(--ac);font-family:\'JetBrains Mono\',monospace;font-size:13px">→</span><span style="font-size:14.5px;line-height:1.6;color:var(--mut)"></span>';
+      row.lastChild.textContent = f;
+      feats.appendChild(row);
+    });
+    var stack = document.getElementById('m-stack');
+    stack.innerHTML = '';
+    p.stack.forEach(function (tag) {
+      var s = document.createElement('span');
+      s.style.cssText = 'border:1px solid var(--ln);border-radius:999px;padding:6px 12px;font-family:\'JetBrains Mono\',monospace;font-size:11.5px;color:var(--chip)';
+      s.textContent = tag;
+      stack.appendChild(s);
+    });
+    var live = document.getElementById('m-live');
+    var src = document.getElementById('m-src');
+    var note = document.getElementById('m-note');
+    live.hidden = !p.liveUrl; if (p.liveUrl) live.href = p.liveUrl;
+    src.hidden = !p.srcUrl; if (p.srcUrl) src.href = p.srcUrl;
+    note.hidden = !(!p.liveUrl && !p.srcUrl && p.linkNote);
+    note.textContent = p.linkNote || '';
+    modal.hidden = false;
+    app.modalOpen = true;
+    document.body.style.overflow = 'hidden';
+    setTimeout(function () {
+      var panel = document.querySelector('[data-modal-panel]');
+      if (panel) panel.focus();
+    }, 60);
+  }
+
+  function closeProject() {
+    modal.hidden = true;
+    app.modalOpen = false;
+    document.body.style.overflow = '';
+    if (app.opener && app.opener.focus) app.opener.focus();
+  }
+
+  document.querySelectorAll('[data-open]').forEach(function (btn) {
+    btn.addEventListener('click', function () { openProject(btn.getAttribute('data-open'), btn); });
+  });
+  document.getElementById('modal-close').addEventListener('click', closeProject);
+  document.getElementById('modal-scrim').addEventListener('click', closeProject);
+
+  document.addEventListener('keydown', function (e) {
+    if (!app.modalOpen) return;
+    if (e.key === 'Escape') { closeProject(); return; }
+    if (e.key !== 'Tab') return;
+    var f = modal.querySelectorAll('a[href]:not([hidden]), button, [tabindex="-1"]');
+    if (!f.length) return;
+    var list = Array.prototype.filter.call(f, function (el) { return el.offsetParent !== null || el === modal; });
+    var first = list[0], last = list[list.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
+
+  // ---------- contact form ----------
+  document.getElementById('contact-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var gv = function (id) { var el = document.getElementById(id); return el ? el.value.trim() : ''; };
+    var name = gv('dk-f-name'), mail = gv('dk-f-email'), msg = gv('dk-f-msg');
+    if (!msg) { var el = document.getElementById('dk-f-msg'); if (el) el.focus(); return; }
+    var subject = 'Portfolio hello' + (name ? ' from ' + name : '');
+    var body = msg + '\n\n— ' + (name || 'Anonymous') + (mail ? ' · ' + mail : '');
+    window.location.href = 'mailto:gdhairya29@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+  });
+
+  // ---------- tic-tac-toe ----------
+  function gWin(b, m) {
+    var L = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+    for (var i = 0; i < L.length; i++) {
+      if (b[L[i][0]] === m && b[L[i][1]] === m && b[L[i][2]] === m) return L[i];
+    }
+    return null;
+  }
+
+  function renderGame() {
+    var s = app.game;
+    var winColor = s.winner === 'bot' ? 'var(--vi)' : 'var(--ac)';
+    document.querySelectorAll('#g-board .cellbtn').forEach(function (btn) {
+      var i = parseInt(btn.getAttribute('data-cell'), 10);
+      var v = s.board[i];
+      btn.textContent = v === 'X' ? '✕' : (v === 'O' ? '○' : '');
+      btn.style.color = v === 'O' ? 'var(--vi)' : 'var(--ac)';
+      var inWin = s.winLine && s.winLine.indexOf(i) !== -1;
+      btn.style.borderColor = inWin ? winColor : 'var(--ln)';
+      btn.style.background = inWin ? 'var(--slot)' : 'transparent';
+      btn.disabled = !!(v || s.winner || s.thinking);
+      btn.setAttribute('aria-label', 'Cell ' + (i + 1) + ' of 9' + (v === 'X' ? ' — you' : (v === 'O' ? ' — blob' : ' — empty')));
+    });
+    var gs = 'Your move — you’re ✕.';
+    if (s.thinking) gs = 'Robot is computing…';
+    if (s.winner === 'you') gs = 'You win?! The blob demands a rematch.';
+    if (s.winner === 'bot') gs = 'Blob wins. Zero humility detected.';
+    if (s.winner === 'draw') gs = 'A draw. Very diplomatic.';
+    document.getElementById('g-status').textContent = gs;
+    document.getElementById('g-score').textContent = 'You ' + s.sYou + ' · Blob ' + s.sBot + ' · Draws ' + s.sDraw;
+  }
+
+  function gEmote(strength) {
+    if (app.three && !app.reduced) blobPulse(strength);
+  }
+
+  function botMove() {
+    var s = app.game;
+    if (s.winner) return;
+    var b = s.board.slice();
+    var empt = [];
+    b.forEach(function (v, i) { if (!v) empt.push(i); });
+    if (!empt.length) return;
+    var pick = -1, k, t;
+    for (k = 0; k < empt.length; k++) { t = b.slice(); t[empt[k]] = 'O'; if (gWin(t, 'O')) { pick = empt[k]; break; } }
+    if (pick < 0 && Math.random() < 0.88) {
+      for (k = 0; k < empt.length; k++) { t = b.slice(); t[empt[k]] = 'X'; if (gWin(t, 'X')) { pick = empt[k]; break; } }
+    }
+    if (pick < 0 && !b[4]) pick = 4;
+    if (pick < 0) { var cor = [0,2,6,8].filter(function (i) { return !b[i]; }); if (cor.length) pick = cor[Math.floor(Math.random() * cor.length)]; }
+    if (pick < 0) pick = empt[Math.floor(Math.random() * empt.length)];
+    b[pick] = 'O';
+    var wl = gWin(b, 'O');
+    if (wl) { s.board = b; s.winner = 'bot'; s.winLine = wl; s.sBot++; s.thinking = false; renderGame(); gEmote(1.0); return; }
+    if (b.every(Boolean)) { s.board = b; s.winner = 'draw'; s.winLine = []; s.sDraw++; s.thinking = false; renderGame(); gEmote(0.6); return; }
+    s.board = b; s.thinking = false;
+    renderGame();
+  }
+
+  document.querySelectorAll('#g-board .cellbtn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var i = parseInt(btn.getAttribute('data-cell'), 10);
+      var s = app.game;
+      if (s.winner || s.thinking || s.board[i]) return;
+      var b = s.board.slice();
+      b[i] = 'X';
+      var wl = gWin(b, 'X');
+      if (wl) { s.board = b; s.winner = 'you'; s.winLine = wl; s.sYou++; s.thinking = false; renderGame(); gEmote(1.0); return; }
+      if (b.every(Boolean)) { s.board = b; s.winner = 'draw'; s.winLine = []; s.sDraw++; s.thinking = false; renderGame(); gEmote(0.6); return; }
+      s.board = b; s.thinking = true;
+      renderGame();
+      clearTimeout(app.botTimer);
+      app.botTimer = setTimeout(botMove, 700);
+    });
+  });
+
+  document.getElementById('g-reset').addEventListener('click', function () {
+    clearTimeout(app.botTimer);
+    app.game.board = [null,null,null,null,null,null,null,null,null];
+    app.game.winner = null;
+    app.game.winLine = [];
+    app.game.thinking = false;
+    renderGame();
+  });
+
+  // ---------- three.js ----------
+  function syncThreeTheme() {
+    var T = app.three;
+    if (!T || !window.THREE) return;
+    var light = document.documentElement.getAttribute('data-theme') === 'light';
+    T.hemi.intensity = light ? 1.35 : 0.85;
+    T.dir.intensity = light ? 1.5 : 1.0;
+    T.rim.intensity = light ? 0.4 : 1.3;
+    var acc = cssVar('--ac') || '#FF4A11';
+    var vio = cssVar('--vi') || '#6C5CFF';
+    T.rim.color.set(acc);
+    T.dustU.uColA.value.set(vio);
+    T.dustU.uColB.value.set(acc);
+    T.dustU.uLight.value = light ? 1 : 0;
+    T.dustMat.blending = light ? THREE.NormalBlending : THREE.AdditiveBlending;
+    T.dustMat.needsUpdate = true;
+    T.shadowMat.opacity = light ? 0.26 : 0.42;
+    if (T.blobU) {
+      T.blobU.uColA.value.set(vio);
+      T.blobU.uColB.value.set(acc);
+      T.blobU.uLight.value = light ? 1 : 0;
+    }
+    if (app.reduced && T.renderOnce) T.renderOnce();
+  }
+
+  function blobPulse(strength) {
+    var T = app.three;
+    if (!T || !T.blobU) return;
+    T.blobU.uPulse.value = Math.max(T.blobU.uPulse.value, strength);
+    T.spinKick = (T.spinKick || 0) + strength * 0.03;
+    if (app.reduced && T.renderOnce) T.renderOnce();
+  }
+
+  var NOISE_GLSL = [
+    'vec3 mod289(vec3 x){return x - floor(x * (1.0/289.0)) * 289.0;}',
+    'vec4 mod289(vec4 x){return x - floor(x * (1.0/289.0)) * 289.0;}',
+    'vec4 permute(vec4 x){return mod289(((x*34.0)+10.0)*x);}',
+    'vec4 taylorInvSqrt(vec4 r){return 1.79284291400159 - 0.85373472095314 * r;}',
+    'float snoise(vec3 v){',
+    '  const vec2 C = vec2(1.0/6.0, 1.0/3.0);',
+    '  const vec4 D = vec4(0.0, 0.5, 1.0, 2.0);',
+    '  vec3 i = floor(v + dot(v, C.yyy));',
+    '  vec3 x0 = v - i + dot(i, C.xxx);',
+    '  vec3 g = step(x0.yzx, x0.xyz);',
+    '  vec3 l = 1.0 - g;',
+    '  vec3 i1 = min(g.xyz, l.zxy);',
+    '  vec3 i2 = max(g.xyz, l.zxy);',
+    '  vec3 x1 = x0 - i1 + C.xxx;',
+    '  vec3 x2 = x0 - i2 + C.yyy;',
+    '  vec3 x3 = x0 - D.yyy;',
+    '  i = mod289(i);',
+    '  vec4 p = permute(permute(permute(i.z + vec4(0.0, i1.z, i2.z, 1.0)) + i.y + vec4(0.0, i1.y, i2.y, 1.0)) + i.x + vec4(0.0, i1.x, i2.x, 1.0));',
+    '  float n_ = 0.142857142857;',
+    '  vec3 ns = n_ * D.wyz - D.xzx;',
+    '  vec4 j = p - 49.0 * floor(p * ns.z * ns.z);',
+    '  vec4 x_ = floor(j * ns.z);',
+    '  vec4 y_ = floor(j - 7.0 * x_);',
+    '  vec4 x = x_ * ns.x + ns.yyyy;',
+    '  vec4 y = y_ * ns.x + ns.yyyy;',
+    '  vec4 h = 1.0 - abs(x) - abs(y);',
+    '  vec4 b0 = vec4(x.xy, y.xy);',
+    '  vec4 b1 = vec4(x.zw, y.zw);',
+    '  vec4 s0 = floor(b0) * 2.0 + 1.0;',
+    '  vec4 s1 = floor(b1) * 2.0 + 1.0;',
+    '  vec4 sh = -step(h, vec4(0.0));',
+    '  vec4 a0 = b0.xzyw + s0.xzyw * sh.xxyy;',
+    '  vec4 a1 = b1.xzyw + s1.xzyw * sh.zzww;',
+    '  vec3 p0 = vec3(a0.xy, h.x);',
+    '  vec3 p1 = vec3(a0.zw, h.y);',
+    '  vec3 p2 = vec3(a1.xy, h.z);',
+    '  vec3 p3 = vec3(a1.zw, h.w);',
+    '  vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2,p2), dot(p3,p3)));',
+    '  p0 *= norm.x; p1 *= norm.y; p2 *= norm.z; p3 *= norm.w;',
+    '  vec4 m = max(0.5 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);',
+    '  m = m * m;',
+    '  return 105.0 * dot(m*m, vec4(dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3)));',
+    '}'
+  ].join('\n');
+
+  function rebuildDust(n) {
+    var T = app.three;
+    if (!T) return;
+    var count = Math.max(200, n);
+    if (app.coarse || window.innerWidth < 768) count = Math.min(count, 6000);
+    if (T.dust) {
+      T.scene.remove(T.dust);
+      T.dust.geometry.dispose();
+      T.dust = null;
+    }
+    var pos = new Float32Array(count * 3);
+    var rand = new Float32Array(count);
+    for (var i = 0; i < count; i++) {
+      pos[i * 3] = (Math.random() * 2 - 1) * 8.5;
+      pos[i * 3 + 1] = (Math.random() * 2 - 1) * 5;
+      pos[i * 3 + 2] = -4.5 + Math.random() * 6;
+      rand[i] = Math.random();
+    }
+    var geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    geo.setAttribute('aRand', new THREE.BufferAttribute(rand, 1));
+    T.dust = new THREE.Points(geo, T.dustMat);
+    T.dust.frustumCulled = false;
+    T.scene.add(T.dust);
+    T.density = n;
+    if (app.reduced && T.renderOnce) T.renderOnce();
+  }
+
+  function makeBlob() {
+    var T = app.three;
+    if (!T || T.blob) return;
+    var blobU = {
+      uTime: { value: 0 },
+      uAmp: { value: 0.16 },
+      uSpd: { value: 0.45 },
+      uPulse: { value: 0 },
+      uColA: { value: new THREE.Color('#6C5CFF') },
+      uColB: { value: new THREE.Color('#FF4A11') },
+      uColC: { value: new THREE.Color('#FF3D8A') },
+      uLight: { value: 0 }
+    };
+    var blobMat = new THREE.ShaderMaterial({
+      uniforms: blobU,
+      vertexShader: NOISE_GLSL + '\n' + [
+        'uniform float uTime;',
+        'uniform float uAmp;',
+        'uniform float uSpd;',
+        'uniform float uPulse;',
+        'varying vec3 vN;',
+        'varying vec3 vPos;',
+        'varying float vDisp;',
+        'void main(){',
+        '  float t = uTime * uSpd;',
+        '  float n = snoise(normal * 1.7 + vec3(0.0, t * 0.7, t * 0.4));',
+        '  float n2 = snoise(normal * 4.2 - t * 0.9) * 0.35;',
+        '  float d = (n + n2) * uAmp + uPulse * 0.32 * sin(uTime * 9.0 + n * 8.0);',
+        '  vec3 p = position + normal * d;',
+        '  vDisp = d;',
+        '  vN = normalize(normalMatrix * normal);',
+        '  vec4 mv = modelViewMatrix * vec4(p, 1.0);',
+        '  vPos = mv.xyz;',
+        '  gl_Position = projectionMatrix * mv;',
+        '}'
+      ].join('\n'),
+      fragmentShader: [
+        'uniform vec3 uColA;',
+        'uniform vec3 uColB;',
+        'uniform vec3 uColC;',
+        'uniform float uLight;',
+        'uniform float uTime;',
+        'varying vec3 vN;',
+        'varying vec3 vPos;',
+        'varying float vDisp;',
+        'void main(){',
+        '  vec3 V = normalize(-vPos);',
+        '  vec3 N = normalize(vN);',
+        '  float fres = pow(1.0 - max(dot(N, V), 0.0), 1.7);',
+        '  float band = 0.5 + 0.5 * sin(vDisp * 7.0 + uTime * 0.7 + N.y * 3.0);',
+        '  vec3 col = mix(uColA, uColB, band);',
+        '  col = mix(col, uColC, fres * 0.8);',
+        '  col += fres * 0.38;',
+        '  float topLight = 0.15 + 0.85 * max(dot(N, normalize(vec3(0.4, 0.9, 0.4))), 0.0);',
+        '  col *= mix(0.72, 1.12, topLight);',
+        '  col = mix(col, col * 0.62 + vec3(0.05), uLight * 0.45);',
+        '  gl_FragColor = vec4(col, 1.0);',
+        '}'
+      ].join('\n')
+    });
+    var blob = new THREE.Mesh(new THREE.IcosahedronGeometry(1.18, 64), blobMat);
+    blob.position.y = 1.28;
+    T.blob = blob;
+    T.blobU = blobU;
+    T.blobMat = blobMat;
+    T.robotGroup.add(blob);
+    syncThreeTheme();
+  }
+
+  function setupThree() {
+    var holder = document.querySelector('[data-dk="stage"]');
+    if (!holder || !window.THREE || app.three) return;
+    var renderer;
+    try {
+      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
+    } catch (e) { return; }
+    holder.innerHTML = '';
+    var dprCap = window.innerWidth < 768 ? 1.5 : 1.75;
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, dprCap));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.outputEncoding = THREE.sRGBEncoding;
+    renderer.domElement.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;display:block;';
+    holder.appendChild(renderer.domElement);
+
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(42, window.innerWidth / window.innerHeight, 0.1, 60);
+    camera.position.set(0, 0, 7);
+
+    var hemi = new THREE.HemisphereLight(0xffffff, 0x2a2440, 0.85);
+    scene.add(hemi);
+    var dir = new THREE.DirectionalLight(0xffffff, 1.0);
+    dir.position.set(3, 6, 4);
+    scene.add(dir);
+    var rim = new THREE.PointLight(new THREE.Color('#FF4A11'), 1.3, 20);
+    rim.position.set(-4, 2.5, -2.5);
+    scene.add(rim);
+
+    var robotGroup = new THREE.Group();
+    scene.add(robotGroup);
+
+    var shC = document.createElement('canvas');
+    shC.width = shC.height = 128;
+    var sctx = shC.getContext('2d');
+    var grd = sctx.createRadialGradient(64, 64, 6, 64, 64, 62);
+    grd.addColorStop(0, 'rgba(0,0,0,0.85)');
+    grd.addColorStop(1, 'rgba(0,0,0,0)');
+    sctx.fillStyle = grd;
+    sctx.fillRect(0, 0, 128, 128);
+    var shTex = new THREE.CanvasTexture(shC);
+    var shadowMat = new THREE.MeshBasicMaterial({ map: shTex, transparent: true, opacity: 0.42, depthWrite: false });
+    var shadow = new THREE.Mesh(new THREE.PlaneGeometry(3.1, 3.1), shadowMat);
+    shadow.rotation.x = -Math.PI / 2;
+    shadow.position.y = 0.02;
+    robotGroup.add(shadow);
+
+    var pr = renderer.getPixelRatio();
+    var dustU = {
+      uTime: { value: 0 },
+      uSize: { value: 2.6 * pr },
+      uMax: { value: 7 * pr },
+      uColA: { value: new THREE.Color('#6C5CFF') },
+      uColB: { value: new THREE.Color('#FF4A11') },
+      uInk: { value: new THREE.Color('#17141F') },
+      uLight: { value: 0 }
+    };
+    var dustMat = new THREE.ShaderMaterial({
+      uniforms: dustU,
+      transparent: true,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+      vertexShader: [
+        'uniform float uTime;',
+        'uniform float uSize;',
+        'uniform float uMax;',
+        'attribute float aRand;',
+        'varying float vR;',
+        'varying float vFade;',
+        'void main(){',
+        '  vec3 pos = position;',
+        '  pos.y += sin(uTime * 0.22 + aRand * 6.2831) * 0.4;',
+        '  pos.x += cos(uTime * 0.16 + aRand * 9.42) * 0.3;',
+        '  vec4 mv = modelViewMatrix * vec4(pos, 1.0);',
+        '  gl_Position = projectionMatrix * mv;',
+        '  float ps = uSize * mix(0.5, 1.6, aRand) * (6.2 / -mv.z);',
+        '  gl_PointSize = min(ps, uMax);',
+        '  vR = aRand;',
+        '  vFade = smoothstep(-14.0, -3.0, mv.z);',
+        '}'
+      ].join('\n'),
+      fragmentShader: [
+        'uniform vec3 uColA;',
+        'uniform vec3 uColB;',
+        'uniform vec3 uInk;',
+        'uniform float uLight;',
+        'uniform float uTime;',
+        'varying float vR;',
+        'varying float vFade;',
+        'void main(){',
+        '  vec2 uv = gl_PointCoord - 0.5;',
+        '  float d = length(uv);',
+        '  float alpha = smoothstep(0.5, 0.12, d);',
+        '  float m = smoothstep(0.25, 0.85, fract(vR * 5.13 + uTime * 0.04));',
+        '  vec3 col = mix(uColA, uColB, m);',
+        '  col = mix(col, uInk, uLight * 0.55);',
+        '  float a = alpha * (0.22 + 0.5 * vR) * vFade * mix(1.0, 0.75, uLight);',
+        '  gl_FragColor = vec4(col, a);',
+        '}'
+      ].join('\n')
+    });
+
+    app.three = {
+      renderer: renderer, scene: scene, camera: camera, hemi: hemi, dir: dir, rim: rim,
+      robotGroup: robotGroup, shadowMat: shadowMat, dustMat: dustMat, dustU: dustU,
+      dust: null, density: 0, blob: null, blobU: null, blobMat: null, spinKick: 0, renderOnce: null
+    };
+    rebuildDust(PARTICLES);
+    makeBlob();
+
+    var KF = [
+      { x: 2.8, y: -1.68, z: 0.2, ry: -0.35 },
+      { x: -3.35, y: -1.42, z: -1.2, ry: 0.55 },
+      { x: -2.45, y: -1.42, z: -0.35, ry: 0.5 },
+      { x: 3.3, y: -1.35, z: 0.05, ry: -0.25 }
+    ];
+    var targetP = 0, mx = 0, my = 0, dragging = false, dragOff = 0, dragVel = 0, dragMoved = 0, lastX = 0, lastY = 0;
+    var raf = 0, lastT = 0, running = false;
+    var gy = 0, gp = 0;
+    var sections = ['hero', 'work', 'about', 'contact'].map(function (id) { return document.getElementById(id); });
+    var raycaster = new THREE.Raycaster();
+    var ndc = new THREE.Vector2();
+
+    var shape = function (f) { return Math.min(Math.max((f - 0.28) / 0.55, 0), 1); };
+    var calcProgress = function () {
+      var anchor = window.scrollY + window.innerHeight * 0.45;
+      var p = 0;
+      for (var i = 0; i < sections.length - 1; i++) {
+        if (!sections[i] || !sections[i + 1]) break;
+        var a = sections[i].getBoundingClientRect().top + window.scrollY;
+        var b = sections[i + 1].getBoundingClientRect().top + window.scrollY;
+        if (anchor >= b) { p = i + 1; }
+        else if (anchor > a) { p = i + shape((anchor - a) / (b - a)); break; }
+      }
+      targetP = Math.max(0, Math.min(3, p));
+      app.secIdx = Math.min(3, Math.round(targetP));
+    };
+
+    var applyFrame = function (dt) {
+      var T = app.three;
+      if (!T) return;
+      if (!app.reduced) dustU.uTime.value += dt;
+      if (app.smoothP === undefined) app.smoothP = targetP;
+      app.smoothP += (targetP - app.smoothP) * (app.reduced ? 1 : 0.07);
+      var P = app.smoothP;
+      var i0 = Math.min(Math.floor(P), 2), f = P - i0;
+      var a = KF[i0], b = KF[i0 + 1];
+      var narrow = camera.aspect < 0.82;
+      var xs = narrow ? 0.2 : 1;
+      var zoff = narrow ? -2.2 : 0;
+      robotGroup.position.set((a.x + (b.x - a.x) * f) * xs, a.y + (b.y - a.y) * f, a.z + (b.z - a.z) * f + zoff);
+      var baseRy = a.ry + (b.ry - a.ry) * f;
+      dragOff += dragVel;
+      dragVel *= 0.94;
+      dragOff *= 0.985;
+      robotGroup.rotation.y = baseRy + dragOff;
+      if (T.dust) T.dust.position.y = P * 0.55;
+      if (T.blob && T.blobU) {
+        if (!app.reduced) T.blobU.uTime.value += dt;
+        var mood = app.MOODS[app.secIdx] || app.MOODS[0];
+        var hoverBoost = Math.max(0, 0.1 - Math.abs(mx) * 0.06);
+        T.blobU.uAmp.value += ((mood.amp + hoverBoost) - T.blobU.uAmp.value) * 0.04;
+        T.blobU.uSpd.value += (mood.spd - T.blobU.uSpd.value) * 0.04;
+        T.blobU.uPulse.value *= 0.945;
+        if (T.spinKick) { dragVel += T.spinKick; T.spinKick = 0; }
+        T.blob.position.y = 1.28 + Math.sin(T.blobU.uTime.value * 0.8) * 0.09;
+        T.blob.rotation.y += dt * 0.12;
+      }
+      if (!app.reduced) {
+        camera.position.x += (mx * 0.35 - camera.position.x) * 0.045;
+        camera.position.y += (-my * 0.24 - camera.position.y) * 0.045;
+      }
+      camera.lookAt(0, -0.2, 0);
+      renderer.render(scene, camera);
+    };
+
+    var tick = function (t) {
+      raf = requestAnimationFrame(tick);
+      var dt = Math.min((t - lastT) / 1000, 0.05) || 0.016;
+      lastT = t;
+      applyFrame(dt);
+    };
+    var start = function () { if (!running && !app.reduced) { running = true; lastT = performance.now(); raf = requestAnimationFrame(tick); } };
+    var stop = function () { running = false; cancelAnimationFrame(raf); };
+
+    app.three.renderOnce = function () {
+      calcProgress();
+      app.smoothP = targetP;
+      applyFrame(0.016);
+    };
+
+    var onResize = function () {
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.position.z = camera.aspect < 0.82 ? 8.6 : 7;
+      camera.updateProjectionMatrix();
+      calcProgress();
+      if (app.reduced && app.three) app.three.renderOnce();
+    };
+    var onScroll = function () { calcProgress(); if (app.reduced && app.three) app.three.renderOnce(); };
+    var onMove = function (e) {
+      mx = (e.clientX / window.innerWidth) * 2 - 1;
+      my = (e.clientY / window.innerHeight) * 2 - 1;
+      if (dragging) {
+        var dx = e.clientX - lastX, dy = e.clientY - lastY;
+        dragMoved += Math.abs(dx) + Math.abs(dy);
+        lastX = e.clientX; lastY = e.clientY;
+        dragOff += dx * 0.0045;
+        dragVel = dx * 0.0009;
+      }
+    };
+    var interactiveGuard = function (t) { return !!(t && t.closest && t.closest('a, button, input, textarea, select, form, label, nav, header, img, [data-tilt], [data-dkmodal], p, h1, h2, h3, li, strong, em, span, svg')); };
+    var onDown = function (e) {
+      if (app.coarse || e.button !== 0) return;
+      if (interactiveGuard(e.target)) return;
+      dragging = true; dragMoved = 0; lastX = e.clientX; lastY = e.clientY; dragVel = 0;
+      document.body.style.cursor = 'grabbing';
+      e.preventDefault();
+    };
+    var onUp = function () { dragging = false; document.body.style.cursor = ''; };
+    var onClick = function (e) {
+      if (app.modalOpen || app.reduced || !app.three || !app.three.robotGroup) return;
+      if (dragMoved > 6) { dragMoved = 0; return; }
+      if (interactiveGuard(e.target)) return;
+      ndc.set((e.clientX / window.innerWidth) * 2 - 1, -(e.clientY / window.innerHeight) * 2 + 1);
+      raycaster.setFromCamera(ndc, camera);
+      var target = app.three.blob;
+      if (!target) return;
+      var hits = raycaster.intersectObject(target, true);
+      if (hits.length) blobPulse(0.9);
+    };
+    var onVis = function () { if (document.hidden) stop(); else start(); };
+
+    window.addEventListener('resize', onResize);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('pointermove', onMove);
+    document.addEventListener('pointerdown', onDown);
+    window.addEventListener('pointerup', onUp);
+    document.addEventListener('click', onClick);
+    document.addEventListener('visibilitychange', onVis);
+
+    onResize();
+    calcProgress();
+    syncThreeTheme();
+    if (app.reduced) { app.three.renderOnce(); } else { start(); }
+  }
+
+  function attemptThree(tries) {
+    if (window.THREE) { setupThree(); return; }
+    if (tries > 80) return;
+    setTimeout(function () { attemptThree(tries + 1); }, 130);
+  }
+
+  // ---------- boot ----------
+  if (app.coarse) {
+    var h = document.querySelector('[data-dk="draghint"]');
+    if (h) h.textContent = 'Tap the blob — it reacts';
+  }
+  renderTheme();
+  renderGame();
+  attemptThree(0);
+})();
+</script>
+</body>
+</html>
