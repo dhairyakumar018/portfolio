@@ -114,6 +114,27 @@
     .shot-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
     #proj-modal[hidden] { display: none !important; }
 
+    @keyframes dk-eq { 0%, 100% { transform: scaleY(0.3); } 50% { transform: scaleY(1); } }
+    .dyn-island { position: relative; width: 130px; height: 36px; border-radius: 999px; background: #0A090F; border: 1px solid rgba(236,234,246,0.14); box-shadow: 0 12px 40px rgba(0,0,0,0.45); cursor: pointer; overflow: hidden; transition: width 0.5s cubic-bezier(0.22,1,0.36,1), height 0.5s cubic-bezier(0.22,1,0.36,1); }
+    .di-pill, .di-open { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 9px; transition: opacity 0.3s ease; }
+    .di-pill { opacity: 1; }
+    .di-open { opacity: 0; }
+    .dyn-island:hover, .dyn-island.on { width: 270px; height: 68px; }
+    .dyn-island:hover .di-pill, .dyn-island.on .di-pill { opacity: 0; }
+    .dyn-island:hover .di-open, .dyn-island.on .di-open { opacity: 1; }
+    .di-dot { width: 7px; height: 7px; border-radius: 99px; background: var(--ac); animation: dk-pulse 2.2s ease-in-out infinite; }
+    .di-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: #ECEAF6; }
+    .di-bars { display: flex; align-items: center; gap: 4px; height: 22px; }
+    .di-bars span { width: 4px; height: 100%; border-radius: 2px; background: var(--ac); animation: dk-eq 0.9s ease-in-out infinite; transform-origin: center; }
+    .di-bars span:nth-child(2) { animation-delay: 0.12s; background: var(--vi); }
+    .di-bars span:nth-child(3) { animation-delay: 0.24s; }
+    .di-bars span:nth-child(4) { animation-delay: 0.36s; background: var(--vi); }
+    .di-bars span:nth-child(5) { animation-delay: 0.48s; }
+    .lab-log { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 11px; font-family: 'JetBrains Mono', monospace; font-size: 12.5px; line-height: 1.6; color: var(--mut); }
+    .lab-log .done::before { content: '[x] '; color: var(--ac); }
+    .lab-log .todo::before { content: '[ ] '; color: var(--mut); }
+    .lab-log strong { color: var(--tx); font-weight: 500; }
+
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
@@ -132,6 +153,7 @@
   <a href="#hero" style="font-family:'Clash Display',sans-serif;font-weight:700;font-size:19px;letter-spacing:0.01em;color:var(--tx);text-decoration:none">dk<span style="color:var(--ac)">.</span></a>
   <nav aria-label="Primary" style="display:flex;align-items:center;gap:clamp(14px, 2.6vw, 30px)">
     <a href="#work" class="navlink">Work</a>
+    <a href="#lab" class="navlink">Lab</a>
     <a href="#about" class="navlink">About</a>
     <a href="#contact" class="navlink">Contact</a>
     <button id="theme-toggle" class="theme-btn" aria-label="Switch to light mode" title="Switch to light mode">
@@ -305,7 +327,7 @@
               <span style="display:inline-flex;align-items:center;gap:7px;border:1px solid var(--ln);border-radius:999px;padding:5px 12px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--tx)"><span style="width:6px;height:6px;border-radius:99px;background:var(--ac);animation:dk-pulse 2.2s ease-in-out infinite"></span>Main quest</span>
             </div>
             <h3 style="margin:0;line-height:1.05"><button class="card-title-btn" data-open="axis">AXiS</button></h3>
-            <p style="margin:0;flex-grow:1;font-size:15px;line-height:1.6;color:var(--mut)">An AI "operating layer" — persistent memory, vision, voice, IoT hooks. The current obsession; all energy goes here.</p>
+            <p style="margin:0;flex-grow:1;font-size:15px;line-height:1.6;color:var(--mut)">A desktop AI in a floating Dynamic Island pill — voice in, action out. Phase 1 is alive on my desktop rn. Full build log below ↓</p>
             <div style="display:flex;flex-wrap:wrap;gap:8px">
               <span style="border:1px solid var(--ln);border-radius:999px;padding:6px 12px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--chip)">Electron</span>
               <span style="border:1px solid var(--ln);border-radius:999px;padding:6px 12px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--chip)">FastAPI</span>
@@ -323,10 +345,48 @@
     </div>
   </section>
 
+  <section id="lab" data-screen-label="Lab" aria-labelledby="lab-title" style="position:relative;padding:clamp(110px, 15vh, 170px) 0;scroll-margin-top:70px">
+    <div style="width:min(1240px, calc(100% - clamp(40px, 8vw, 120px)));margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit, minmax(min(100%, 380px), 1fr));gap:clamp(40px, 6vw, 90px);align-items:start">
+      <div>
+        <div data-reveal="0" style="display:flex;align-items:center;gap:12px"><span style="width:8px;height:8px;border-radius:99px;background:var(--ac);animation:dk-pulse 2.2s ease-in-out infinite"></span><span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mut)">02 / In the lab — rn</span></div>
+        <h2 id="lab-title" data-reveal="80" style="margin:22px 0 0;font-family:'Clash Display',sans-serif;font-weight:600;font-size:clamp(34px, 4.6vw, 64px);line-height:1.02;letter-spacing:-0.02em;color:var(--tx)">AXiS — a Dynamic Island for Windows.</h2>
+        <p data-reveal="160" style="margin:30px 0 0;font-size:clamp(15.5px, 1.3vw, 17.5px);line-height:1.75;color:var(--mut)">A desktop AI that lives in a floating, always-on-top pill — say the wake word and it listens, thinks with whichever LLM brain is awake (<strong style="color:var(--tx);font-weight:500">local Ollama or Claude</strong>), talks back, and controls the machine. It can literally organize the folder you're looking at.</p>
+        <p data-reveal="220" style="margin:20px 0 0;font-size:clamp(15.5px, 1.3vw, 17.5px);line-height:1.75;color:var(--mut)">Phase 1 is <strong style="color:var(--tx);font-weight:500">alive on my desktop right now</strong> — not a mockup, not a Figma. The build log:</p>
+        <ul data-reveal="280" class="lab-log" style="margin-top:30px">
+          <li class="done"><strong>core engine</strong> — FastAPI + one WebSocket event bus for everything</li>
+          <li class="done"><strong>voice loop</strong> — wake word → Whisper → agent → TTS (mutes itself so it can't wake itself. learned that the fun way)</li>
+          <li class="done"><strong>hot-swap brains</strong> — NVIDIA / Ollama / Claude, switchable mid-conversation, no restart</li>
+          <li class="done"><strong>agent tools</strong> — open apps, web search, SQLite long-term memory, folder control</li>
+          <li class="done"><strong>dynamic island UI</strong> — frameless, click-through, always-on-top Electron pill that morphs via pure CSS</li>
+          <li class="todo"><strong>phase 2</strong> — vision, deeper system control, IoT hooks</li>
+        </ul>
+        <div data-reveal="340" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:30px">
+          <span style="border:1px solid var(--ln);border-radius:999px;padding:7px 13px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--chip)">Python · FastAPI</span>
+          <span style="border:1px solid var(--ln);border-radius:999px;padding:7px 13px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--chip)">Electron · React · TS</span>
+          <span style="border:1px solid var(--ln);border-radius:999px;padding:7px 13px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--chip)">Whisper</span>
+          <span style="border:1px solid var(--ln);border-radius:999px;padding:7px 13px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--chip)">Ollama</span>
+          <span style="border:1px solid var(--ln);border-radius:999px;padding:7px 13px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--chip)">Claude API</span>
+          <span style="border:1px solid var(--ln);border-radius:999px;padding:7px 13px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--chip)">SQLite</span>
+        </div>
+      </div>
+      <div data-reveal="150">
+        <div style="border:1px solid var(--ln);border-radius:22px;background:var(--card);backdrop-filter:blur(8px);padding:clamp(24px, 3vw, 36px);display:flex;flex-direction:column;gap:22px;align-items:center;min-height:340px;justify-content:center">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mut)">Live demo — the entire UI is this pill</span>
+          <div id="dyn-island" class="dyn-island" role="button" tabindex="0" aria-label="AXiS Dynamic Island demo — activate to see the listening state">
+            <div class="di-pill"><span class="di-dot"></span><span class="di-label">axis</span></div>
+            <div class="di-open"><div class="di-bars"><span></span><span></span><span></span><span></span><span></span></div><span class="di-label">listening…</span></div>
+          </div>
+          <p style="margin:0;font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.7;color:var(--mut);text-align:center;max-width:280px">hover it. that's the whole app — a pill that floats over everything and expands when you talk to it.</p>
+          <a href="https://github.com/dhairyakumar018/AXiS" target="_blank" rel="noopener" class="ulink">follow the build ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="about" data-screen-label="About" aria-labelledby="about-title" style="position:relative;padding:clamp(110px, 15vh, 170px) 0;scroll-margin-top:70px">
     <div style="width:min(1240px, calc(100% - clamp(40px, 8vw, 120px)));margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit, minmax(min(100%, 380px), 1fr));gap:clamp(40px, 6vw, 90px);align-items:start">
       <div>
-        <div data-reveal="0" style="display:flex;align-items:center;gap:12px"><span style="width:8px;height:8px;border-radius:99px;background:var(--ac)"></span><span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mut)">02 / About</span></div>
+        <div data-reveal="0" style="display:flex;align-items:center;gap:12px"><span style="width:8px;height:8px;border-radius:99px;background:var(--ac)"></span><span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mut)">03 / About</span></div>
         <h2 id="about-title" data-reveal="80" style="margin:22px 0 0;font-family:'Clash Display',sans-serif;font-weight:600;font-size:clamp(34px, 4.6vw, 64px);line-height:1.02;letter-spacing:-0.02em;color:var(--tx)">Learning in public, shipping in production.</h2>
         <p data-reveal="160" style="margin:30px 0 0;font-size:clamp(15.5px, 1.3vw, 17.5px);line-height:1.75;color:var(--mut)">The pattern: learn a thing, ship it before the motivation dies. Learning web dev became <strong style="color:var(--tx);font-weight:500">LaunchFolio</strong> — live product, real users, real 2am bug reports. A civic-tech idea became <strong style="color:var(--tx);font-weight:500">Community Hero</strong>, running on Google Cloud. One afternoon with an Arduino became a <strong style="color:var(--tx);font-weight:500">fire detector</strong> with ~95% accuracy and zero chill.</p>
         <p data-reveal="220" style="margin:20px 0 0;font-size:clamp(15.5px, 1.3vw, 17.5px);line-height:1.75;color:var(--mut)">Main quest right now: <strong style="color:var(--tx);font-weight:500">AXiS</strong> — an AI operating layer with persistent memory, vision, and voice. One brain across every device I own. Everything else is a side quest, including <strong style="color:var(--tx);font-weight:500">Jetpack Compose</strong> (convincing Android that a web dev can be trusted).</p>
@@ -385,7 +445,7 @@
 
   <section id="contact" data-screen-label="Contact" aria-labelledby="contact-title" style="position:relative;padding:clamp(120px, 16vh, 180px) 0 0;scroll-margin-top:70px">
     <div style="width:min(1240px, calc(100% - clamp(40px, 8vw, 120px)));margin:0 auto">
-      <div data-reveal="0" style="display:flex;align-items:center;gap:12px"><span style="width:8px;height:8px;border-radius:99px;background:var(--ac)"></span><span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mut)">03 / Contact</span></div>
+      <div data-reveal="0" style="display:flex;align-items:center;gap:12px"><span style="width:8px;height:8px;border-radius:99px;background:var(--ac)"></span><span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mut)">04 / Contact</span></div>
       <h2 id="contact-title" data-reveal="80" style="margin:22px 0 0;font-family:'Clash Display',sans-serif;font-weight:600;font-size:clamp(40px, 7vw, 104px);line-height:0.98;letter-spacing:-0.02em;color:var(--tx);max-width:900px">Got something worth building?</h2>
       <p data-reveal="160" style="margin:26px 0 0;max-width:560px;font-size:clamp(15.5px, 1.3vw, 17.5px);line-height:1.7;color:var(--mut)">Internship, collab, or a weird idea that deserves to exist — say less. My inbox replies faster than my CI pipeline.</p>
       <div data-reveal="240" style="margin-top:clamp(40px, 6vh, 64px)">
@@ -516,10 +576,10 @@
       stack: ['C++', 'Arduino Uno', 'IR sensors'],
       liveUrl: '', srcUrl: '', linkNote: 'Hardware build — it lives on my desk, not on the cloud.' },
     'axis': { num: '06', year: '2026', status: 'Main quest', dot: 'var(--ac)',
-      title: 'AXiS', tag: 'One AI layer over everything I own.',
-      desc: 'AXiS is the main quest: an AI operating layer that remembers you between sessions, sees through vision models, listens and talks back, and reaches into IoT devices. Electron shell, FastAPI core, local-first models via Ollama with LangChain orchestration. This is where all my energy goes right now — this portfolio was technically procrastination.',
-      features: ['Persistent memory across sessions', 'Vision + voice as first-class inputs', 'IoT hooks for real-world control', 'Local-first models via Ollama + LangChain'],
-      stack: ['Electron', 'FastAPI', 'Ollama', 'LangChain'],
+      title: 'AXiS', tag: 'A Dynamic Island for Windows — and it talks back.',
+      desc: 'AXiS is the main quest: a desktop AI living in a floating, click-through, always-on-top pill — macOS Dynamic Island energy, but on Windows and actually intelligent. Say the wake word and it listens (Whisper), thinks with whichever LLM brain is awake — local Ollama or Claude, hot-swappable mid-conversation — talks back, remembers facts in SQLite, and controls the machine, down to organizing the folder you currently have open. Phase 1 runs on my desktop right now. This portfolio was technically procrastination.',
+      features: ['Voice loop: wake word → Whisper → agent → TTS, self-muting so it can’t wake itself', 'Hot-swap LLM brains — NVIDIA, Ollama, Claude — live, no restart', 'Agent tools: open apps, web search, SQLite memory, folder control', 'Frameless click-through Electron pill that morphs via pure CSS'],
+      stack: ['Python', 'FastAPI', 'Electron', 'React', 'Whisper', 'Ollama', 'SQLite'],
       liveUrl: '', srcUrl: 'https://github.com/dhairyakumar018/AXiS', linkNote: '' }
   };
 
@@ -530,6 +590,7 @@
     MOODS: [
       { amp: 0.16, spd: 0.45 },
       { amp: 0.26, spd: 0.75 },
+      { amp: 0.34, spd: 1.0 },
       { amp: 0.18, spd: 0.55 },
       { amp: 0.38, spd: 1.2 }
     ],
@@ -1103,13 +1164,14 @@
     var KF = [
       { x: 2.8, y: -1.68, z: 0.2, ry: -0.35 },
       { x: -3.35, y: -1.42, z: -1.2, ry: 0.55 },
+      { x: 3.0, y: -1.5, z: -0.5, ry: -0.45 },
       { x: -2.45, y: -1.42, z: -0.35, ry: 0.5 },
       { x: 3.3, y: -1.35, z: 0.05, ry: -0.25 }
     ];
     var targetP = 0, mx = 0, my = 0, dragging = false, dragOff = 0, dragVel = 0, dragMoved = 0, lastX = 0, lastY = 0;
     var raf = 0, lastT = 0, running = false;
     var gy = 0, gp = 0;
-    var sections = ['hero', 'work', 'about', 'contact'].map(function (id) { return document.getElementById(id); });
+    var sections = ['hero', 'work', 'lab', 'about', 'contact'].map(function (id) { return document.getElementById(id); });
     var raycaster = new THREE.Raycaster();
     var ndc = new THREE.Vector2();
 
@@ -1124,8 +1186,8 @@
         if (anchor >= b) { p = i + 1; }
         else if (anchor > a) { p = i + shape((anchor - a) / (b - a)); break; }
       }
-      targetP = Math.max(0, Math.min(3, p));
-      app.secIdx = Math.min(3, Math.round(targetP));
+      targetP = Math.max(0, Math.min(4, p));
+      app.secIdx = Math.min(4, Math.round(targetP));
     };
 
     var applyFrame = function (dt) {
@@ -1135,7 +1197,7 @@
       if (app.smoothP === undefined) app.smoothP = targetP;
       app.smoothP += (targetP - app.smoothP) * (app.reduced ? 1 : 0.07);
       var P = app.smoothP;
-      var i0 = Math.min(Math.floor(P), 2), f = P - i0;
+      var i0 = Math.min(Math.floor(P), 3), f = P - i0;
       var a = KF[i0], b = KF[i0 + 1];
       var narrow = camera.aspect < 0.82;
       var xs = narrow ? 0.2 : 1;
@@ -1247,6 +1309,12 @@
   if (app.coarse) {
     var h = document.querySelector('[data-dk="draghint"]');
     if (h) h.textContent = 'Tap the blob — it reacts';
+  }
+  var island = document.getElementById('dyn-island');
+  if (island) {
+    var toggleIsland = function () { island.classList.toggle('on'); };
+    island.addEventListener('click', toggleIsland);
+    island.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleIsland(); } });
   }
   renderTheme();
   renderGame();
