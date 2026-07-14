@@ -172,6 +172,14 @@
     .chat-send { flex-shrink: 0; width: 42px; border-radius: 12px; border: 0; background: var(--ac); color: #0A0910; cursor: pointer; font-size: 17px; transition: filter 0.2s; }
     .chat-send:hover { filter: brightness(1.12); }
     .chat-send:focus-visible { outline: 2px solid var(--vi); outline-offset: 2px; }
+    .chat-cta { display: none; gap: 8px; padding: 10px 14px 0; }
+    .chat-cta.show { display: flex; }
+    .chat-cta a { flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 7px; padding: 11px; border-radius: 12px; text-decoration: none; font-family: 'Satoshi', ui-sans-serif, sans-serif; font-weight: 700; font-size: 13px; transition: filter 0.2s, border-color 0.2s, color 0.2s; }
+    .chat-cta .cta-mail { background: var(--ac); color: #0A0910; }
+    .chat-cta .cta-mail:hover { filter: brightness(1.12); color: #0A0910; }
+    .chat-cta .cta-li { flex: 0 0 auto; border: 1px solid var(--ln3); color: var(--tx); font-weight: 500; }
+    .chat-cta .cta-li:hover { border-color: var(--tx); color: var(--tx); }
+    .chat-cta a:focus-visible { outline: 2px solid var(--vi); outline-offset: 2px; }
 
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
@@ -365,12 +373,12 @@
               <span style="display:inline-flex;align-items:center;gap:7px;border:1px solid var(--ln);border-radius:999px;padding:5px 12px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--tx)"><span style="width:6px;height:6px;border-radius:99px;background:var(--ac);animation:dk-pulse 2.2s ease-in-out infinite"></span>Main quest</span>
             </div>
             <h3 style="margin:0;line-height:1.05"><button class="card-title-btn" data-open="axis">AXiS</button></h3>
-            <p style="margin:0;flex-grow:1;font-size:15px;line-height:1.6;color:var(--mut)">A desktop AI in a floating Dynamic Island pill — voice in, action out. Phase 1 is alive on my desktop rn. Full build log below ↓</p>
+            <p style="margin:0;flex-grow:1;font-size:15px;line-height:1.6;color:var(--mut)">Artificial eXperience &amp; Intelligent System — a desktop AI in a floating Dynamic Island. Voice in, action out. Phase 1's alive on my desktop rn. Build log below ↓</p>
             <div style="display:flex;flex-wrap:wrap;gap:8px">
               <span style="border:1px solid var(--ln);border-radius:999px;padding:6px 12px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--chip)">Electron</span>
               <span style="border:1px solid var(--ln);border-radius:999px;padding:6px 12px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--chip)">FastAPI</span>
-              <span style="border:1px solid var(--ln);border-radius:999px;padding:6px 12px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--chip)">Ollama</span>
-              <span style="border:1px solid var(--ln);border-radius:999px;padding:6px 12px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--chip)">LangChain</span>
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:6px 12px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--chip)">LangGraph</span>
+              <span style="border:1px solid var(--ln);border-radius:999px;padding:6px 12px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--chip)">Whisper</span>
             </div>
             <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;border-top:1px solid var(--ln2);padding-top:15px">
               <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--mut)">the main quest</span>
@@ -387,24 +395,28 @@
     <div style="width:min(1240px, calc(100% - clamp(40px, 8vw, 120px)));margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit, minmax(min(100%, 380px), 1fr));gap:clamp(40px, 6vw, 90px);align-items:start">
       <div>
         <div data-reveal="0" style="display:flex;align-items:center;gap:12px"><span style="width:8px;height:8px;border-radius:99px;background:var(--ac);animation:dk-pulse 2.2s ease-in-out infinite"></span><span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mut)">02 / In the lab — rn</span></div>
-        <h2 id="lab-title" data-reveal="80" style="margin:22px 0 0;font-family:'Clash Display',sans-serif;font-weight:600;font-size:clamp(34px, 4.6vw, 64px);line-height:1.02;letter-spacing:-0.02em;color:var(--tx)">AXiS — a Dynamic Island for Windows.</h2>
-        <p data-reveal="160" style="margin:30px 0 0;font-size:clamp(15.5px, 1.3vw, 17.5px);line-height:1.75;color:var(--mut)">A desktop AI that lives in a floating, always-on-top pill — say the wake word and it listens, thinks with whichever LLM brain is awake (<strong style="color:var(--tx);font-weight:500">local Ollama or Claude</strong>), talks back, and controls the machine. It can literally organize the folder you're looking at.</p>
-        <p data-reveal="220" style="margin:20px 0 0;font-size:clamp(15.5px, 1.3vw, 17.5px);line-height:1.75;color:var(--mut)">Phase 1 is <strong style="color:var(--tx);font-weight:500">alive on my desktop right now</strong> — not a mockup, not a Figma. The build log:</p>
+        <h2 id="lab-title" data-reveal="80" style="margin:22px 0 0;font-family:'Clash Display',sans-serif;font-weight:600;font-size:clamp(34px, 4.6vw, 64px);line-height:1.02;letter-spacing:-0.02em;color:var(--tx)">AXiS — an AI OS for my whole machine.</h2>
+        <p data-reveal="160" style="margin:30px 0 0;font-size:clamp(15.5px, 1.3vw, 17.5px);line-height:1.75;color:var(--mut)"><strong style="color:var(--tx);font-weight:500">Artificial eXperience &amp; Intelligent System.</strong> A desktop AI that lives in a floating Dynamic Island pill — say the wake word, it listens, thinks with whichever LLM brain is awake (<strong style="color:var(--tx);font-weight:500">local Ollama or Claude</strong>), talks back, and actually <em style="font-style:normal;color:var(--tx)">does things</em> — down to organizing the folder you're staring at.</p>
+        <p data-reveal="220" style="margin:20px 0 0;font-size:clamp(15.5px, 1.3vw, 17.5px);line-height:1.75;color:var(--mut)">Not a chatbot — a modular platform: voice, memory, desktop automation, a document brain, a coding copilot, computer vision, and IoT hooks. One brain across everything I own. <strong style="color:var(--tx);font-weight:500">Phase 1 is alive on my desktop rn</strong> — not a mockup. The log:</p>
         <ul data-reveal="280" class="lab-log" style="margin-top:30px">
           <li class="done"><strong>core engine</strong> — FastAPI + one WebSocket event bus for everything</li>
-          <li class="done"><strong>voice loop</strong> — wake word → Whisper → agent → TTS (mutes itself so it can't wake itself. learned that the fun way)</li>
+          <li class="done"><strong>voice intelligence</strong> — wake word → Whisper → agent → Piper TTS (mutes itself so it can't wake itself. learned that the fun way)</li>
           <li class="done"><strong>hot-swap brains</strong> — NVIDIA / Ollama / Claude, switchable mid-conversation, no restart</li>
-          <li class="done"><strong>agent tools</strong> — open apps, web search, SQLite long-term memory, folder control</li>
-          <li class="done"><strong>dynamic island UI</strong> — frameless, click-through, always-on-top Electron pill that morphs via pure CSS</li>
-          <li class="todo"><strong>phase 2</strong> — vision, deeper system control, IoT hooks</li>
+          <li class="done"><strong>desktop control + memory</strong> — open apps, web search, SQLite long-term memory, folder automation</li>
+          <li class="done"><strong>dynamic island UI</strong> — frameless, click-through, always-on-top Electron pill, pure-CSS morph</li>
+          <li class="todo"><strong>document brain</strong> — RAG over your files with ChromaDB / Qdrant</li>
+          <li class="todo"><strong>AI coding copilot</strong> — pair-programming inside the island</li>
+          <li class="todo"><strong>vision + device hub</strong> — OpenCV eyes, ESP32 / Arduino / MQTT for IoT &amp; robotics</li>
         </ul>
         <div data-reveal="340" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:30px">
           <span style="border:1px solid var(--ln);border-radius:999px;padding:7px 13px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--chip)">Python · FastAPI</span>
           <span style="border:1px solid var(--ln);border-radius:999px;padding:7px 13px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--chip)">Electron · React · TS</span>
-          <span style="border:1px solid var(--ln);border-radius:999px;padding:7px 13px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--chip)">Whisper</span>
+          <span style="border:1px solid var(--ln);border-radius:999px;padding:7px 13px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--chip)">LangGraph · LangChain</span>
+          <span style="border:1px solid var(--ln);border-radius:999px;padding:7px 13px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--chip)">Whisper · Piper</span>
           <span style="border:1px solid var(--ln);border-radius:999px;padding:7px 13px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--chip)">Ollama</span>
-          <span style="border:1px solid var(--ln);border-radius:999px;padding:7px 13px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--chip)">Claude API</span>
-          <span style="border:1px solid var(--ln);border-radius:999px;padding:7px 13px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--chip)">SQLite</span>
+          <span style="border:1px solid var(--ln);border-radius:999px;padding:7px 13px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--chip)">ChromaDB</span>
+          <span style="border:1px solid var(--ln);border-radius:999px;padding:7px 13px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--chip)">OpenCV</span>
+          <span style="border:1px solid var(--ln);border-radius:999px;padding:7px 13px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--chip)">ESP32 · MQTT</span>
         </div>
       </div>
       <div data-reveal="150">
@@ -596,6 +608,10 @@
     <button class="chat-chip" data-q="What are his skills?">His skills</button>
     <button class="chat-chip" data-q="How do I contact him?">Contact him</button>
   </div>
+  <div class="chat-cta">
+    <a class="cta-mail" href="mailto:gdhairya29@gmail.com?subject=Hey%20Dhairya%20%E2%80%94%20saw%20your%20portfolio&body=Hi%20Dhairya%2C%0A%0AI%20came%20across%20your%20portfolio%20and%20" aria-label="Email Dhairya">📧 Email Dhairya</a>
+    <a class="cta-li" href="https://www.linkedin.com/in/dhairya-kumar-a77b2b35b" target="_blank" rel="noopener" aria-label="Open Dhairya's LinkedIn">in ↗</a>
+  </div>
   <form id="chat-form" class="chat-input">
     <input id="chat-text" type="text" autocomplete="off" placeholder="Ask about his projects, skills…" aria-label="Type your question" />
     <button type="submit" class="chat-send" aria-label="Send">→</button>
@@ -613,8 +629,8 @@
   var KB = [
     { k: ['hi','hey','hello','yo','sup','hii','heyy','namaste','wassup','hola'], min: true,
       a: "hey! 👋 i'm AXiS-mini — the little sibling of AXiS, the desktop AI Dhairya's building. ask me anything about his projects, skills, or how to reach him." },
-    { k: ['who is','about dhairya','about him','yourself','introduce','who are you talking','tell me about dhairya','who’s','whos dhairya','background'],
-      a: "Dhairya Kumar — first-year CSE student at NIET (Greater Noida, India), currently holding an 8.5 CGPA. His whole thing: \"I ship products, not just repos.\" Two of his builds are live in production right now, and he's open to internships." },
+    { k: ['who is','about dhairya','about him','yourself','introduce','who are you talking','tell me about dhairya','who’s','whos dhairya','background','more about'],
+      a: "Dhairya Kumar — a first-year CSE student at NIET, Greater Noida, though he moves more like a founder than a fresher 😄 His whole thing is \"I ship products, not just repos\" — and he backs it up: two of his projects are LIVE in production with real users.\n\nHe's built AI web apps (LaunchFolio, Community Hero), a computer-vision tracker, an AI translator, and even an Arduino fire detector — and rn he's deep in AXiS, his own desktop AI platform 🔥 Full-stack + AI, picking up Android, and not scared of hardware. Open to internships and always down to build something cool 🚀" },
     { k: ['what has he built','what have you built','projects','selected work','his work','portfolio of','all projects','what did he make','what has he made','builds','things he built','show me'],
       a: "Six builds that escaped localhost:\n\n• LaunchFolio — AI resume builder (LIVE)\n• Community Hero — AI civic platform (LIVE)\n• VisionTrack — real-time object detection\n• LexiFlux — AI translation suite\n• Fire Detection System — Arduino hardware\n• AXiS — desktop AI (his main quest rn)\n\nwant details on any one? just ask 🙂" },
     { k: ['launchfolio','resume builder','portfolio builder','launch folio'],
@@ -627,17 +643,17 @@
       a: "LexiFlux is an AI translation suite — auto language detection, Gemini-powered translation, and native-accent text-to-speech, plus a persistent translation history. React 19 + TypeScript + Express. Code's on GitHub." },
     { k: ['fire','arduino','flame','sensor','hardware','buzzer','iot detector','fire detection'],
       a: "The Fire Detection System is his hardware build: an Arduino Uno wired to IR flame sensors hitting ~95% detection accuracy, with a buzzer + LED alert chain. C++ firmware, hand-wired breadboard. His first proof that code can reach out and touch the physical world — it lives on his desk, not the cloud 🔥" },
-    { k: ['axis','main quest','desktop ai','dynamic island','voice assistant','assistant','what is axis','tell me about axis'],
-      a: "AXiS is his main quest 🎯 — a desktop AI for Windows that lives in a floating \"Dynamic Island\" pill. Say the wake word → it listens (Whisper) → thinks with a hot-swappable LLM brain (local Ollama or Claude, switchable mid-conversation) → talks back → and controls your PC: opens apps, web search, remembers facts in SQLite, even organizes the folder you're looking at. FastAPI backend, Electron + React frontend. Phase 1 is alive on his desktop right now. btw — I'm the mini web version of it 🙂" },
+    { k: ['axis','main quest','desktop ai','dynamic island','voice assistant','assistant','what is axis','tell me about axis','rag','coding assistant','automation','iot','robotics'],
+      a: "okay AXiS is the crown jewel 👑 — full name Artificial eXperience & Intelligent System. it's a desktop AI that lives in a floating \"Dynamic Island\" on Windows. you say the wake word → it listens (Whisper) → thinks with a hot-swappable brain (local Ollama or Claude, switch mid-convo, no restart) → talks back → and actually DOES stuff: opens apps, web search, remembers you in SQLite, organizes your folders.\n\nand it's not just a chatbot — it's a whole platform. the roadmap goes crazy: a RAG document brain, an AI coding copilot, computer vision, even IoT + robotics via ESP32. phase 1 is already running on his desktop rn 🔥 (and yeah — I'm the baby version of it 👶)" },
     { k: ['skills','tech stack','technologies','languages he','what can he','frameworks','tools he','coding','programming languages','stack',
           'does he know','can he','familiar with','experience with','work with','good at','proficient','android','jetpack','compose','kotlin',
           'react','next.js','nextjs','node','python','javascript','typescript','java','c++','tailwind','flask','fastapi','ml','machine learning',
           'frontend','backend','fullstack','full-stack','database','sql','cloud','devops'],
       a: "His toolbox:\n\n• Languages — Python, JavaScript, TypeScript, Kotlin, Java, C++\n• Frontend — React, Next.js, Tailwind, Jetpack Compose (learning Android now)\n• Backend/cloud — Node.js, FastAPI, Cloudflare, Google Cloud Run, Git\n• AI/hardware — YOLOv8, Gemini, Whisper, Ollama, LangChain, Arduino\n\nAndroid's his current learning focus 📱" },
-    { k: ['education','college','university','study','studying','degree','niet','cgpa','gpa','student','course','semester','year of study'],
-      a: "He's a first-year B.Tech CSE student at NIET, Greater Noida (Class of 2029), holding an 8.5 CGPA — while shipping side projects on nights and weekends." },
-    { k: ['contact','hire','email','reach','reach him','get in touch','hiring','recruit','work with','internship','available','availability','opportunity','message him'],
-      a: "Easiest way: email " + MAIL + " — his inbox replies faster than his CI pipeline 😄 He's open to internships. Also on GitHub (" + GH + ") and LinkedIn (" + LI + ")." },
+    { k: ['education','college','university','study','studying','degree','niet','student','course','semester','year of study'],
+      a: "He's a first-year B.Tech CSE student at NIET, Greater Noida (Class of 2029) — but he treats the syllabus as the floor, not the ceiling. Most of the real learning happens shipping side projects on nights and weekends." },
+    { id: 'contact', k: ['contact','hire','email','reach','reach him','get in touch','hiring','recruit','work with','internship','available','availability','opportunity','message him','collab','collaborate'],
+      a: "say less 🤝 hit him up at " + MAIL + " — his inbox replies faster than his CI pipeline fr. he's wide open to internships + collabs. also on GitHub (" + GH + ") and LinkedIn (" + LI + ").\n\ntap the button right below and you're straight in his inbox 👇" },
     { k: ['resume','cv','curriculum'],
       a: "You can grab his resume from the site, or just email him at " + MAIL + " and he'll send it straight over." },
     { k: ['github','linkedin','social','links','profile','find him online'],
@@ -676,7 +692,7 @@
       });
       if (score > bestScore) { bestScore = score; best = item; }
     });
-    return best ? best.a : FALLBACK;
+    return best || { a: FALLBACK };
   }
 
   var launch = document.getElementById('chat-launch');
@@ -711,11 +727,16 @@
     typing.innerHTML = '<span></span><span></span><span></span>';
     body.appendChild(typing);
     body.scrollTop = body.scrollHeight;
-    var reply = answer(q);
+    var item = answer(q);
+    var reply = item.a;
     var delay = 350 + Math.min(reply.length * 7, 750);
     setTimeout(function () {
       if (typing.parentNode) typing.parentNode.removeChild(typing);
       addMsg(reply, 'bot');
+      if (item.id === 'contact') {
+        var cta = document.querySelector('.chat-cta');
+        if (cta) { cta.classList.add('show'); body.scrollTop = body.scrollHeight; }
+      }
     }, delay);
   }
 
@@ -794,10 +815,10 @@
       stack: ['C++', 'Arduino Uno', 'IR sensors'],
       liveUrl: '', srcUrl: '', linkNote: 'Hardware build — it lives on my desk, not on the cloud.' },
     'axis': { num: '06', year: '2026', status: 'Main quest', dot: 'var(--ac)',
-      title: 'AXiS', tag: 'A Dynamic Island for Windows — and it talks back.',
-      desc: 'AXiS is the main quest: a desktop AI living in a floating, click-through, always-on-top pill — macOS Dynamic Island energy, but on Windows and actually intelligent. Say the wake word and it listens (Whisper), thinks with whichever LLM brain is awake — local Ollama or Claude, hot-swappable mid-conversation — talks back, remembers facts in SQLite, and controls the machine, down to organizing the folder you currently have open. Phase 1 runs on my desktop right now. This portfolio was technically procrastination.',
-      features: ['Voice loop: wake word → Whisper → agent → TTS, self-muting so it can’t wake itself', 'Hot-swap LLM brains — NVIDIA, Ollama, Claude — live, no restart', 'Agent tools: open apps, web search, SQLite memory, folder control', 'Frameless click-through Electron pill that morphs via pure CSS'],
-      stack: ['Python', 'FastAPI', 'Electron', 'React', 'Whisper', 'Ollama', 'SQLite'],
+      title: 'AXiS', tag: 'Artificial eXperience & Intelligent System.',
+      desc: 'AXiS is the main quest: not a chatbot, a modular AI operating platform that lives in a floating, click-through, always-on-top Dynamic Island. Say the wake word and it listens (Whisper), thinks with whichever LLM brain is awake — local Ollama or Claude, hot-swappable mid-conversation — talks back (Piper TTS), remembers you in SQLite, and actually does things: opens apps, web search, folder automation. The bigger vision stitches in a RAG document brain, an AI coding copilot, computer vision, and IoT/robotics — one intelligence layer across my whole setup. Phase 1 runs on my desktop right now. This portfolio was technically procrastination.',
+      features: ['Voice loop: wake word → Whisper → agent → Piper TTS, self-muting so it can’t wake itself', 'Hot-swap LLM brains — NVIDIA, Ollama, Claude — live, no restart', 'Desktop control + SQLite long-term memory + folder automation', 'Roadmap: RAG document brain, coding copilot, OpenCV vision, ESP32/MQTT IoT'],
+      stack: ['Python', 'FastAPI', 'Electron', 'React', 'LangGraph', 'Whisper', 'Ollama', 'ChromaDB'],
       liveUrl: '', srcUrl: 'https://github.com/dhairyakumar018/AXiS', linkNote: '' }
   };
 
