@@ -628,7 +628,9 @@
 
   var KB = [
     { k: ['hi','hey','hello','yo','sup','hii','heyy','namaste','wassup','hola'], min: true,
-      a: "hey! 👋 i'm AXiS-mini — the little sibling of AXiS, the desktop AI Dhairya's building. ask me anything about his projects, skills, or how to reach him." },
+      a: ["hey! 👋 i'm AXiS-mini — the little sibling of AXiS, the desktop AI Dhairya's building. ask me anything about his projects, skills, or how to reach him.",
+          "yo 👋 AXiS-mini here — the baby version of Dhairya's desktop AI. ask me anything about him: projects, skills, how to reach him, whatever.",
+          "hey there 👋 i'm AXiS-mini. i know everything about Dhairya — his builds, his stack, his main quest. what do you wanna know?"] },
     { k: ['who is','about dhairya','about him','yourself','introduce','who are you talking','tell me about dhairya','who’s','whos dhairya','background','more about'],
       a: "Dhairya Kumar — a first-year CSE student at NIET, Greater Noida, though he moves more like a founder than a fresher 😄 His whole thing is \"I ship products, not just repos\" — and he backs it up: two of his projects are LIVE in production with real users.\n\nHe's built AI web apps (LaunchFolio, Community Hero), a computer-vision tracker, an AI translator, and even an Arduino fire detector — and rn he's deep in AXiS, his own desktop AI platform 🔥 Full-stack + AI, picking up Android, and not scared of hardware. Open to internships and always down to build something cool 🚀" },
     { k: ['what has he built','what have you built','projects','selected work','his work','portfolio of','all projects','what did he make','what has he made','builds','things he built','show me'],
@@ -646,7 +648,7 @@
     { k: ['axis','main quest','desktop ai','dynamic island','voice assistant','assistant','what is axis','tell me about axis','rag','coding assistant','automation','iot','robotics'],
       a: "okay AXiS is the crown jewel 👑 — full name Artificial eXperience & Intelligent System. it's a desktop AI that lives in a floating \"Dynamic Island\" on Windows. you say the wake word → it listens (Whisper) → thinks with a hot-swappable brain (local Ollama or Claude, switch mid-convo, no restart) → talks back → and actually DOES stuff: opens apps, web search, remembers you in SQLite, organizes your folders.\n\nand it's not just a chatbot — it's a whole platform. the roadmap goes crazy: a RAG document brain, an AI coding copilot, computer vision, even IoT + robotics via ESP32. phase 1 is already running on his desktop rn 🔥 (and yeah — I'm the baby version of it 👶)" },
     { k: ['skills','tech stack','technologies','languages he','what can he','frameworks','tools he','coding','programming languages','stack',
-          'does he know','can he','familiar with','experience with','work with','good at','proficient','android','jetpack','compose','kotlin',
+          'does he know','can he','familiar with','experience with','experience in','work with','good at','good with','skilled in','proficient','android','jetpack','compose','kotlin',
           'react','next.js','nextjs','node','python','javascript','typescript','java','c++','tailwind','flask','fastapi','ml','machine learning',
           'frontend','backend','fullstack','full-stack','database','sql','cloud','devops'],
       a: "His toolbox:\n\n• Languages — Python, JavaScript, TypeScript, Kotlin, Java, C++\n• Frontend — React, Next.js, Tailwind, Jetpack Compose (learning Android now)\n• Backend/cloud — Node.js, FastAPI, Cloudflare, Google Cloud Run, Git\n• AI/hardware — YOLOv8, Gemini, Whisper, Ollama, LangChain, Arduino\n\nAndroid's his current learning focus 📱" },
@@ -664,12 +666,72 @@
       a: "On the record:\n\n• Android Basics with Compose — Google (2026)\n• Data Analytics simulation — Deloitte x Forage (2026)\n• Shortlisted — Google Gemini Student Ambassador 2026\n• Innovate X Hackathon — NIET (2026)" },
     { k: ['what are you','are you ai','are you real','are you a bot','chatbot','who made you','are you axis','you a robot','human or'],
       a: "I'm AXiS-mini — a tiny web version of AXiS, the desktop AI Dhairya's building. The full version listens to your voice, talks back, and can drive a whole PC. I just answer questions about him 🙂" },
-    { k: ['thanks','thank you','thx','ty','appreciate','cheers'], min: true,
-      a: "anytime! if you're a recruiter — his inbox is " + MAIL + " 😉" },
-    { k: ['fun fact','hobby','cool','interesting','something fun','tell me something'],
-      a: "Fun one: his Arduino fire detector can spot a flame before you'd even smell smoke. Also — he built an AI resume builder (LaunchFolio), then hand-coded this entire portfolio himself. The irony is well documented 😄" },
-    { k: ['bye','goodbye','see ya','later','cya'], min: true,
-      a: "catch you later! 👋 don't forget — " + MAIL + " if you want to reach him." }
+    { k: ['thanks','thank you','thx','ty','appreciate','cheers','tysm'], min: true,
+      a: ["anytime! if you're a recruiter — his inbox is " + MAIL + " 😉",
+          "np 🙌 ask me anything else, i'm literally built for this.",
+          "gotchu 😎 anything else you wanna know about him?",
+          "anytime 🫡 he's open to internships btw, just saying."] },
+    { k: ['fun fact','hobby','something fun','tell me something','surprise me','random fact','fun'],
+      a: ["fun one: his Arduino fire detector can spot a flame before you'd even smell smoke 🔥",
+          "he built an AI resume + portfolio builder (LaunchFolio)... then hand-coded this entire portfolio himself. the irony is load-bearing 😄",
+          "AXiS used to wake itself up with its own voice. he had to teach it to mute its own mic. character development 🎤",
+          "two of his projects are live in production and he's still a first-year. most people are on tutorial #47 rn 👀"] },
+    { k: ['bye','goodbye','see ya','later','cya','gtg','peace out'], min: true,
+      a: ["catch you later! 👋 don't forget — " + MAIL + " if you want to reach him.",
+          "peace ✌️ his inbox is " + MAIL + " whenever you need him.",
+          "later! 👋 tell your recruiter friends about the guy with two live products 😉"] },
+
+    { k: ['why hire','why should','is he good','is he any good','worth hiring','how good','why him','what makes him','stand out','strengths','best thing about','sell me'],
+      a: "real talk: he's a first-year who already has TWO products live in production with real users 👀 most people in his year are still on tutorial #47.\n\nhe ships, he debugs at 2am, he learns by building — and rn he's architecting his own AI platform (AXiS) from scratch. that's not a student portfolio, that's a track record 🚀\n\nwanna reach him? just ask." },
+
+    { k: ['who made this','who built this','who designed this','made this site','built this website','this website','this portfolio','who coded','made you'],
+      a: "Dhairya built this whole thing by hand — no template, no page builder 💅 the 3D blob is custom Three.js shaders, and I'm hand-written too.\n\nthe guy who makes portfolio builders decided to hand-code his own. iconic 😄" },
+
+    { k: ['help','what can i ask','what should i ask','what can you do','what do you know','options','menu','guide me','suggestions'],
+      a: "i'm loaded with everything about Dhairya 🧠 try:\n\n• \"who is Dhairya?\"\n• \"what has he built?\"\n• \"tell me about AXiS\"\n• \"what are his skills?\"\n• \"why should we hire him?\"\n• \"how do I contact him?\"\n\nor just ask whatever, i'll figure it out 😉" },
+
+    { k: ['how are you','how r u','how you doing','whats up','what up','hows it going','how is it going','you good','how do you do','wyd'],
+      a: ["living in a browser tab, thriving 😌 what do you wanna know about Dhairya?",
+          "i'm just vibes and JavaScript tbh 🙂 ask me anything about his work.",
+          "running at 60fps, no complaints 😎 what's up?"] },
+
+    { k: ['joke','funny','make me laugh'],
+      a: ["his Arduino fire detector once went off because of a candle. worked perfectly. terrified everyone 🔥",
+          "he built an AI resume builder... then hand-coded this entire portfolio by hand. the irony is load-bearing at this point 😄",
+          "AXiS kept waking itself up with its own voice. he had to teach it to mute itself. we've all been there 🎤"] },
+
+    { k: ['lol','lmao','haha','hehe','rofl','lmfao','😂','🤣','hahaha'], min: true,
+      a: ["😂 glad you're entertained. ask me something else!",
+          "haha fr 😄 anything else you wanna know?",
+          "😭 real. what else you got?"] },
+
+    { k: ['nice','awesome','impressive','wow','amazing','great','dope','sick','love it','legit','insane','goated','respect','props','damn','cool','clean','beautiful','slick'],
+      a: ["right?? he'll take that as a compliment 😄 his GitHub's " + GH + " if you wanna see how it's built.",
+          "ikr 🔥 he's got more cooking — ask about AXiS if you haven't yet.",
+          "appreciate that 🙏 he built every pixel of this himself btw.",
+          "fr fr 😎 ask me about any project and i'll spill the details."] },
+
+    { k: ['ok','okay','okey','got it','gotcha','i see','makes sense','understood','alright','aight','k','noted','word','bet','oh','ah','hmm','yeah','yep','yup','sure','fine'], min: true,
+      a: ["bet 👍 anything else you wanna know about him?",
+          "cool cool. ask me anything else — projects, skills, AXiS, whatever 🙂",
+          "👍 got more questions? i got answers.",
+          "aight 😎 anything else?",
+          "fr. hit me with another one 👀"] },
+
+    { k: ['tell me more','go on','elaborate','anything else','more info'],
+      a: "sure — which part? his projects, AXiS, his skills, or how to reach him? 👀" },
+
+    { k: ['salary','how much','cost','price','charge','expensive','pay','rate','budget'],
+      a: "that's above my pay grade 😅 (i genuinely don't have one). talk numbers with him directly — just ask me for his contact." },
+
+    { k: ['how old','his age','birthday','born'],
+      a: "he's a first-year college student, so do the math 😄 more importantly — he's been shipping real products since before most people finish their first course." },
+
+    { k: ['sorry','my bad','oops','nvm','nevermind'], min: true,
+      a: "all good 🙂 what do you wanna know?" },
+
+    { k: ['meaning of life','are you alive','do you love','sing','dance','marry','flirt','weather','news','who won','capital of','solve','math'],
+      a: "way outside my job description 😅 i'm here for Dhairya facts only. try asking about his projects, his skills, or how to reach him!" }
   ];
 
   var FALLBACK = "I only really know about Dhairya and his work 🙂 Try asking about his projects (LaunchFolio, AXiS, VisionTrack…), his skills, his education, or how to reach him. Or just email him: " + MAIL;
@@ -728,7 +790,7 @@
     body.appendChild(typing);
     body.scrollTop = body.scrollHeight;
     var item = answer(q);
-    var reply = item.a;
+    var reply = Array.isArray(item.a) ? item.a[Math.floor(Math.random() * item.a.length)] : item.a;
     var delay = 350 + Math.min(reply.length * 7, 750);
     setTimeout(function () {
       if (typing.parentNode) typing.parentNode.removeChild(typing);
